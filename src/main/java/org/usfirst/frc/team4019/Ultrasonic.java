@@ -2,82 +2,39 @@ package org.usfirst.frc.team4019;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 
-class Distance {
-	double value;
-	public Distance(double value) {
-		this.value = value;
-	}
-
-	double getFeet() {
-		return this.value / 12;
-	}
-
-	int getFeetRound() {
-		return (int) Math.round(this.getFeet());
-	}
-
-	int getFeetFloor() {
-		return (int) Math.floor(this.getFeet());
-	}
-
-	int getFeetCeil() {
-		return (int) Math.ceil(this.getFeet());
-	}
-
-	double getInches() {
-		return this.value % 12;
-	}
-
-	int getInchesRound() {
-		return (int) Math.round(this.getInches());
-	}
-
-	int getInchesFloor() {
-		return (int) Math.floor(this.getInches());
-	}
-
-	int getInchesCeil() {
-		return (int) Math.ceil(this.getInches());
-	}
-
-	double getInchesTotal() {
-		return this.value;
-	}
-
-	int getTotalInchesRound() {
-		return (int) Math.round(this.getInchesTotal());
-	}
-
-	int getTotalInchesFloor() {
-		return (int) Math.floor(this.getInchesTotal());
-	}
-
-	int getTotalInchesCeil() {
-		return (int) Math.ceil(this.getInchesTotal());
-	}
-
-	String getString() {
-		int feet = this.getFeetFloor();
-		int inches = this.getInchesFloor();
-		return feet + "' " + inches + "\"";
-	}
-}
-
 public class Ultrasonic {
 	int port;
-	AnalogInput analogInput;
-	static double voltsToFeetGlobal = 0.0093587227165699;
-	double voltsToFeet = Ultrasonic.voltsToFeetGlobal;
-	public Ultrasonic(int port) {
+	int starboard;
+	AnalogInput analogInputPort;
+	AnalogInput analogInputStarboard;
+	double voltsToFeet = 106.8521880907391270985;
+	boolean posNeg;
+	public Ultrasonic(int port, int starboard) {
 		this.port = port;
-		this.analogInput = new AnalogInput(this.port);
+		this.starboard = starboard;
+		this.analogInputPort = new AnalogInput(this.port);
+		this.analogInputStarboard = new AnalogInput(this.starboard);
 	}
 
-	Distance getDistance() {
-		return new Distance(this.analogInput.getVoltage() / this.voltsToFeet);
+	public double getDistance() {
+		double averageVoltage = (this.analogInputPort.getVoltage() + this.analogInputStarboard.getVoltage()) / 2;
+		double distanceFeet = averageVoltage * this.voltsToFeet;
+		return averageVoltage;
 	}
 
-	Distance getRound() {
-		return new Distance(Math.round(this.analogInput.getVoltage() / this.voltsToFeet));
+	public double getAngle() {
+		System.out.println("Hello Cooper");
+		double portInput = this.analogInputPort.getVoltage();
+		double starboardInput = this.analogInputStarboard.getVoltage();
+		double oppositeLine = 0.0;
+		if (portInput < starboardInput){
+			posNeg = true;
+			oppositeLine = starboardInput - portInput;
+		}
+		else if (portInput > starboardInput){
+			oppositeLine = portInput - starboardInput;
+		}
+		return Math.atan(oppositeLine/Constants.ultrasonic.spread);
+
 	}
 }
