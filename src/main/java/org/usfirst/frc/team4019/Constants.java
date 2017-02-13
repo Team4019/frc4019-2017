@@ -11,6 +11,12 @@ public abstract class Constants {
 	static abstract class ports {
 		static final int[] leftDrive = {0, 1};
 		static final int[] rightDrive = {2, 3};
-		static final String camera = "cam0";
+		static final String camera = "USB Camera 0";
+	}
+
+	// Information relating to the camera (excluding its port)
+	static abstract class camera {
+		static int[] size = {640, 480};
+		// need FOV for calculations
 	}
 }

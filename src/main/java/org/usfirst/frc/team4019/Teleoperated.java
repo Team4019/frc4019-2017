@@ -1,13 +1,10 @@
 package org.usfirst.frc.team4019;
 
-import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public abstract class Teleoperated {
 	public static int init() {
-		CameraServer.getInstance().startAutomaticCapture();
+		// CameraServer.getInstance().startAutomaticCapture();
 		return 0;
 	}
 
@@ -53,6 +50,11 @@ public abstract class Teleoperated {
 				Drive.ds4TankDrive();
 				break;
 		}
+
+		Robot.video.grabFrame(Vision.source);
+		Vision.filter();
+		// Vision.process();
+		Robot.stream.putFrame(Vision.filtered);
 
 		Distance distance = Robot.ultrasonic.getDistance();
 		SmartDashboard.putString("DB/String 0", distance.getString());

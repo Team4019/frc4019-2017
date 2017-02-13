@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 enum DriveMode {ARCADE, TANK, TWIST, TRIPLE, HYBRID, DS4_ARCADE, DS4_TANK}
 
-public class Drive {
+public abstract class Drive {
 	static DriveMode driveMode = DriveMode.DS4_TANK;
 
 	static void arcadeDrive() {

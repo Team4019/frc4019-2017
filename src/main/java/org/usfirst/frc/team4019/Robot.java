@@ -1,6 +1,8 @@
 package org.usfirst.frc.team4019;
 
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.cscore.*;
+import org.opencv.core.Mat;
 import java.util.ArrayList;
 
 class TalonGroup {
@@ -60,10 +62,19 @@ public class Robot extends IterativeRobot {
 	static TalonGroup leftDrive = new TalonGroup(Constants.ports.leftDrive);
 	static TalonGroup rightDrive = new TalonGroup(Constants.ports.rightDrive);
 	static Ultrasonic ultrasonic = new Ultrasonic(0);
+	static CvSink video;
+	static CvSource stream;
+	/*static GripPipeline gripPipeline = new GripPipeline();
+	static Mat visionInput = new Mat();
+	static Mat visionOutput = new Mat();*/
+	//static UsbCamera camera = new UsbCamera("Camera 0", 0);
 
 	@Override
 	public void robotInit() {
 		rightDrive.setInverted(true);
+		CameraServer.getInstance().startAutomaticCapture().setResolution(Constants.camera.size[0], Constants.camera.size[1]);
+		video = CameraServer.getInstance().getVideo(Constants.ports.camera);
+		stream = CameraServer.getInstance().putVideo("Robot Vision", Constants.camera.size[0], Constants.camera.size[1]);
 	}
 
 	@Override
