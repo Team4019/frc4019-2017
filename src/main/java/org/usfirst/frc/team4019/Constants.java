@@ -7,19 +7,26 @@ public abstract class Constants {
 		static final int rightStick = 1;
 		static final int climbUpButton = 7;
 		static final int climbDownButton = 8;
+		static final int scavangeButton = 2;
 	}
 
 	// Components attached to the robot
 	static abstract class ports {
-		static final int[] leftDrive = {6, 7};
-		static final int[] rightDrive = {8, 9};
+		static final int[] leftDrive = {0, 1};
+		static final int[] rightDrive = {2, 3};
 		static final String camera = "cam0";
-		static final int leftClimb = 0;// TODO Find actual port number
-		static final int rightClimb = 2;// TODO Find actual port numbers
+		static final int leftClimb = 4;// TODO Find actual port number
+		static final int rightClimb = 5;// TODO Find actual port numbers
+		static final int leftScavange = 6;// TODO Find actual port number
+		static final int rightScavange = 7;// TODO Find actual port number
 	}
 
 
 	static abstract class climb {
 		static final double speed = 0.4;
+	}
+
+	static abstract class scavanger {
+		static final double speed = 0.6;
 	}
 }

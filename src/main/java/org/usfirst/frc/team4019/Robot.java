@@ -61,6 +61,8 @@ public class Robot extends IterativeRobot {
 	static TalonGroup rightDrive = new TalonGroup(Constants.ports.rightDrive);
 	static Talon leftClimb = new Talon(Constants.ports.leftClimb);
 	static Talon rightClimb = new Talon(Constants.ports.rightClimb);
+	static Talon leftScavange = new Talon(Constants.ports.leftScavange);
+	static Talon rightScavange = new Talon(Constants.ports.rightScavange);
 	static Ultrasonic ultrasonic = new Ultrasonic(0);
 
 	@Override

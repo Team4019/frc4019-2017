@@ -60,6 +60,22 @@ public abstract class Teleoperated {
 		//org.usfirst.frc.team4019.Constants.inputs.climbDownButton;
         //org.usfirst.frc.team4019.Constants.inputs.climbUpButton;
 
+		if(Robot.rightStick.getRawButton(Constants.inputs.climbUpButton)){
+			Climb.ascend();
+		}
+		else if (Robot.rightStick.getRawButton(Constants.inputs.climbDownButton)){
+			Climb.descend();
+		}
+		else {
+			Climb.stop();
+		}
+
+		if (Robot.rightStick.getRawButton(Constants.inputs.scavangeButton)){
+			Scavanger.scavange();
+		}
+		else {
+			Scavanger.stop();
+		}
 		return 0;
 	}
 }
