@@ -9,10 +9,18 @@ public abstract class Test {
 	}
 
 	public static int periodic() {
+		if (Robot.leftStick.getRawButton(0)) {
+			Robot.spark1.set(Robot.leftStick.getThrottle());
+		} else {
+			Robot.spark1.set(0);
+		}
+
+		if (Robot.rightStick.getRawButton(0)) {
+			Robot.spark2.set(Robot.rightStick.getThrottle());
+		} else {
+			Robot.spark2.set(0);
+		}
+
 		return 0;
-	}
-
-	static void setValues() {
-
 	}
 }
