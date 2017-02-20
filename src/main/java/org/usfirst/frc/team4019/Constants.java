@@ -25,7 +25,14 @@ public abstract class Constants {
 	static abstract class climb {
 		static final double speed = 0.4;
 	}
+
+	// Settings for the Scavenging mechanism
 	static abstract class scavenger {
 		static final double speed = 0.6;
+	}
+
+	// Settings for the Ultrasonic mechanism
+	static abstract class ultrasonic {
+		static final double spread = 1.0;
 	}
 }
