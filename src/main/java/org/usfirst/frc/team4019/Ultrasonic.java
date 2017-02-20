@@ -30,11 +30,22 @@ public class Ultrasonic {
 		return distanceFeet;
 	}
 
-	public double getDistancePort(){
-		return this.leftVoltage;
+	public boolean isObstucted(){
+		if (this.getDistance() > 15){
+			return false;
+		}
+		else {
+			return true;
+		}
+		}
 	}
-	public double getDistanceStarboard(){
-		return this.rightVoltage;
+	public boolean isObstructed(double range){
+		if (this.getDistance()> range){
+			return false;
+		}
+		else{
+			return true;
+		}
 	}
 
 	public double getAngle() {
