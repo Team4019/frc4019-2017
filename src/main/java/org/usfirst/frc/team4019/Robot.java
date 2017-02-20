@@ -56,14 +56,14 @@ class ControlStick {
 }
 
 public class Robot extends IterativeRobot {
-	static ControlStick leftStick = new ControlStick(Constants.inputs.leftStick);
-	static ControlStick rightStick = new ControlStick(Constants.inputs.rightStick);
-	static TalonGroup leftDrive = new TalonGroup(Constants.ports.leftDrive);
-	static TalonGroup rightDrive = new TalonGroup(Constants.ports.rightDrive);
-	static Scavenger scavenger = new Scavenger(Constants.ports.scavenger);
-	static Shooter shooter = new Shooter(Constants.ports.leftShootWheel, Constants.ports.rightShootWheel);
-	static Climb climb = new Climb(Constants.ports.leftClimb, Constants.ports.rightClimb);
-	static Ultrasonic ultrasonic = new Ultrasonic(Constants.ports.leftUltrasonic, Constants.ports.rightUltrasonic);
+	static ControlStick leftStick = new ControlStick(Constants.sticks.leftStick);
+	static ControlStick rightStick = new ControlStick(Constants.sticks.rightStick);
+	static TalonGroup leftDrive = new TalonGroup(Constants.drive.leftDriveID);
+	static TalonGroup rightDrive = new TalonGroup(Constants.drive.rightDriveID);
+	static Scavenger scavenger = new Scavenger(Constants.scavenger.scavengerID);
+	static Shooter shooter = new Shooter(Constants.shooter.leftWheelID, Constants.shooter.rightWheelID);
+	static Climb climb = new Climb(Constants.climb.leftClimbID, Constants.climb.rightClimbID);
+	static Ultrasonic ultrasonic = new Ultrasonic(Constants.ultrasonic.leftUltrasonicPort, Constants.ultrasonic.rightUltrasonicPort);
 	static Spark spark1 = new Spark(6);
 	static Spark spark2 = new Spark(7);
 

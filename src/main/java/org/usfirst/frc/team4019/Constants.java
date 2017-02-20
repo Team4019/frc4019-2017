@@ -2,44 +2,57 @@ package org.usfirst.frc.team4019;
 
 public abstract class Constants {
 	// Peripherals attached to the computer
-	static abstract class inputs {
+	static abstract class sticks {
 		static final int leftStick = 0;
 		static final int rightStick = 1;
-		static final int climbUpButton = 7;
-		static final int climbDownButton = 8;
-		static final int scavangeButton = 2;
 	}
 
-	// Components attached to the robot
-	static abstract class ports {
-		static final int[] leftDrive = {10, 11, 12};
-		static final int[] rightDrive = {4, 5, 6};
-		static final int scavenger = 1;
-		static final int leftClimb = 3;
-		static final int rightClimb = 9;
-		static final int leftUltrasonic = 0;
-		static final int rightUltrasonic = 1;
-		static final int leftShootWheel = 2;
-		static final int rightShootWheel = 8;
+	// Settings related to the Drive system
+	static abstract class drive {
+		static final int[] leftDriveID = {10, 11, 12};
+		static final int[] rightDriveID = {4, 5, 6};
+		static final int leftThrottle = 1;
+		static final int rightThrottle = 1;
+		static final int throttle = 1;
 	}
 
-	// Settings for the Climbing mechanism
-	static abstract class climb {
-		static final double speed = 0.4;
-	}
-
-	// Settings for the Scavenging mechanism
+	// Settings related to the scavenging mechanism
 	static abstract class scavenger {
+		static final int scavengerID = 1;
+		static final int intakeButton = 5;
+		static final int outtakeButton = 3;
 		static final double speed = 0.6;
 	}
 
-	// Settings for the Shooting mechanism
+	// Settings related to the Conveyor mechanism
+	static abstract class conveyor {
+		static final int conveyorID = 7;
+		static final int intakeButton = 6;
+		static final int outtakeButton = 4;
+		static final double speed = .6;
+	}
+
+	// Settings related to the Shooting mechanism
 	static abstract class shooter {
+		static final int leftWheelID = 2;
+		static final int rightWheelID = 8;
+		static final int safetyButton = 1;
+		static final int throttleAxis = 6;
 		static final double speed = 1.0;
 	}
 
-	// Settings for the Ultrasonic mechanism
+	// Settings related to the Climbing mechanism
+	static abstract class climb {
+		static final int leftClimbID = 3;
+		static final int rightClimbID = 9;
+		static final int safetyButton = 2;
+		static final double speed = 0.4;
+	}
+
+	// Settings related to the Ultrasonic mechanism
 	static abstract class ultrasonic {
+		static final int leftUltrasonicPort = 8;
+		static final int rightUltrasonicPort = 9;
 		static final double spread = 1.0;
 	}
 }
