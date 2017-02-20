@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 enum DriveMode {ARCADE, TANK, TWIST, TRIPLE, HYBRID, DS4_ARCADE, DS4_TANK}
 
 public class Drive {
-	static DriveMode driveMode = DriveMode.DS4_TANK;
+	static DriveMode driveMode = DriveMode.DS4_ARCADE;
 
 	static void arcadeDrive() {
 		double forward = Robot.rightStick.getY() * getDBSlider(0);

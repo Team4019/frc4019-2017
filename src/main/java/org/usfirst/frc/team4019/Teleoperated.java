@@ -54,28 +54,7 @@ public abstract class Teleoperated {
 				break;
 		}
 
-		Distance distance = Robot.ultrasonic.getDistance();
-		SmartDashboard.putString("DB/String 0", distance.getString());
-		SmartDashboard.putString("DB/String 1", String.valueOf(distance.value));
-		//org.usfirst.frc.team4019.Constants.inputs.climbDownButton;
-        //org.usfirst.frc.team4019.Constants.inputs.climbUpButton;
-
-		if(Robot.rightStick.getRawButton(Constants.inputs.climbUpButton)){
-			Climb.ascend();
-		}
-		else if (Robot.rightStick.getRawButton(Constants.inputs.climbDownButton)){
-			Climb.descend();
-		}
-		else {
-			Climb.stop();
-		}
-
-		if (Robot.rightStick.getRawButton(Constants.inputs.scavangeButton)){
-			Scavanger.scavange();
-		}
-		else {
-			Scavanger.stop();
-		}
+		SmartDashboard.putString("DB/String 0",Double.toString(Robot.ultrasonic.getDistance()));
 		return 0;
 	}
 }
