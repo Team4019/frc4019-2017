@@ -19,46 +19,37 @@ public class Ultrasonic {
 
 	}
 
-	public void update(){
+	public void update() {
 		this.leftVoltage = this.leftInput.getVoltage();
 		this.rightVoltage = this.rightInput.getVoltage();
 	}
 
 	public double getDistance() {
 		double averageVoltage = (this.leftVoltage + this.rightVoltage) / 2;
-		double distanceFeet = averageVoltage * this.voltsToFeet;
-		return distanceFeet;
+		return averageVoltage * this.voltsToFeet;
+	}
+
+	public boolean isObstructed(double range) {
+		if (this.getDistance() > range){
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	public boolean isObstucted(){
-		if (this.getDistance() > 15){
-			return false;
-		}
-		else {
-			return true;
-		}
-		}
-	}
-	public boolean isObstructed(double range){
-		if (this.getDistance()> range){
-			return false;
-		}
-		else{
-			return true;
-		}
+		return this.isObstructed(15);
 	}
 
 	public double getAngle() {
 		double leftVoltage = this.leftVoltage;
 		double rightVoltage = this.rightVoltage;
 		double oppositeLine = 0.0;
-		if (leftVoltage < rightVoltage){
-			oppositeLine = -1 * (rightVoltage - leftVoltage);
-		}
-		else if (leftVoltage > rightVoltage){
+		if (leftVoltage < rightVoltage) {
+			oppositeLine = -(rightVoltage - leftVoltage);
+		} else if (leftVoltage > rightVoltage) {
 			oppositeLine = leftVoltage - rightVoltage;
 		}
-		return Math.atan(this.voltsToFeet * oppositeLine/Constants.ultrasonic.spread);
-
+		return Math.atan(this.voltsToFeet * oppositeLine / Constants.ultrasonic.spread);
 	}
 }

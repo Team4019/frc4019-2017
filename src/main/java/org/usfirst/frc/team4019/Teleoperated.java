@@ -54,9 +54,7 @@ public abstract class Teleoperated {
 				break;
 		}
 		Robot.ultrasonic.update();
-		SmartDashboard.putString("DB/String 0",Double.toString(Robot.ultrasonic.getDistance()));
-		SmartDashboard.putString("DB/String 1", Double.toString(Robot.ultrasonic.getDistancePort()));
-		SmartDashboard.putString("DB/String 2", Double.toString(Robot.ultrasonic.getDistanceStarboard()));
+		SmartDashboard.putString("DB/String 0", Double.toString(Robot.ultrasonic.getDistance()));
 		return 0;
 	}
 }
