@@ -59,9 +59,7 @@ public class Robot extends IterativeRobot {
 	static ControlStick rightStick = new ControlStick(Constants.inputs.rightStick);
 	static TalonGroup leftDrive = new TalonGroup(Constants.ports.leftDrive);
 	static TalonGroup rightDrive = new TalonGroup(Constants.ports.rightDrive);
-	static Ultrasonic ultrasonic = new Ultrasonic(Constants.ports.portUltrasonic, Constants.ports.starboardUltrasonic);
-	static Spark spark1 = new Spark(6);
-	static Spark spark2 = new Spark(7);
+	static Climb climb = new Climb(Constants.ports.leftClimb, Constants.ports.rightClimb);
 
 	@Override
 	public void robotInit() {
