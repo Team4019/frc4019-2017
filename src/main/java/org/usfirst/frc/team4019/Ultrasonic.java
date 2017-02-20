@@ -50,7 +50,7 @@ public class Ultrasonic {
 
 	public double getAngle() {
 		double leftVoltage = this.leftVoltage;
-		double rightVoltage = this.rightVoltage();
+		double rightVoltage = this.rightVoltage;
 		double oppositeLine = 0.0;
 		if (leftVoltage < rightVoltage){
 			oppositeLine = -1 * (rightVoltage - leftVoltage);
