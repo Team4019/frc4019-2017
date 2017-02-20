@@ -1,21 +1,24 @@
 package org.usfirst.frc.team4019;
-// Requires:
-// Constants.java:      Constant defined for each button
-// Robot.java:          Map work methods to motors
-// Teleoperated.java:   Listeners mapped to buttons
-public abstract class Climb {
-    public static void ascend() {
-        Robot.leftClimb.set(Constants.climb.speed);
-        Robot.rightClimb.set(Constants.climb.speed);
+
+import com.ctre.CANTalon;
+
+public class Climb {
+    CANTalon leftMotor;
+    CANTalon rightMotor;
+
+    public Climb(int leftTalonID, int rightTalonID) {
+    	this.leftMotor = new CANTalon(leftTalonID);
+	    this.rightMotor = new CANTalon(rightTalonID);
+	    this.leftMotor.setInverted(true);
     }
 
-    public static void descend() {
-        Robot.leftClimb.set(-Constants.climb.speed);
-        Robot.rightClimb.set(-Constants.climb.speed);
+    public void set(double value) {
+    	this.leftMotor.set(value * Constants.climb.speed);
+	    this.rightMotor.set(value * Constants.climb.speed);
     }
 
-    public static void stop() {
-        Robot.leftClimb.set(0);
-        Robot.rightClimb.set(0);
+    public void stop() {
+        this.leftMotor.set(0);
+        this.rightMotor.set(0);
     }
 }
