@@ -11,7 +11,6 @@ public abstract class Constants {
 	static abstract class ports {
 		static final int[] leftDrive = {0,1};
 		static final int[] rightDrive = {2, 3};
-		static final String camera = "cam0";
 		static final int portUltrasonic = 0;
 		static final int starboardUltrasonic = 1;
 	}
