@@ -1,26 +1,27 @@
 package org.usfirst.frc.team4019;
 
+import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.*;
 import java.util.ArrayList;
 
 class TalonGroup {
-	ArrayList<Talon> talons;
+	ArrayList<CANTalon> talons;
 
 	TalonGroup(int... args) {
 		this.talons = new ArrayList<>();
 		for (int arg : args) {
-			talons.add(new Talon(arg));
+			talons.add(new CANTalon(arg));
 		}
 	}
 
 	public void set(double value) {
-		for (Talon talon : this.talons) {
+		for (CANTalon talon : this.talons) {
 			talon.set(value);
 		}
 	}
 
 	public void setInverted(boolean value) {
-		for (Talon talon : this.talons) {
+		for (CANTalon talon : this.talons) {
 			talon.setInverted(value);
 		}
 	}
