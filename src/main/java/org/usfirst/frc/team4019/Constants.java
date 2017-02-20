@@ -19,6 +19,8 @@ public abstract class Constants {
 		static final int rightClimb = 9;
 		static final int leftUltrasonic = 0;
 		static final int rightUltrasonic = 1;
+		static final int leftShootWheel = 2;
+		static final int rightShootWheel = 8;
 	}
 
 	// Settings for the Climbing mechanism
@@ -29,6 +31,11 @@ public abstract class Constants {
 	// Settings for the Scavenging mechanism
 	static abstract class scavenger {
 		static final double speed = 0.6;
+	}
+
+	// Settings for the Shooting mechanism
+	static abstract class shooter {
+		static final double speed = 1.0;
 	}
 
 	// Settings for the Ultrasonic mechanism
