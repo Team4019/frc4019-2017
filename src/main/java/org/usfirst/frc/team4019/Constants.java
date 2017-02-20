@@ -17,6 +17,8 @@ public abstract class Constants {
 		static final int scavenger = -1; // TODO Find actual port numbers
 		static final int leftClimb = 3;
 		static final int rightClimb = 9;
+		static final int leftUltrasonic = 0;
+		static final int rightUltrasonic = 1;
 	}
 
 	// Settings for the Climbing mechanism

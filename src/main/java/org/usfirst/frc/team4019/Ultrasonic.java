@@ -3,38 +3,53 @@ package org.usfirst.frc.team4019;
 import edu.wpi.first.wpilibj.AnalogInput;
 
 public class Ultrasonic {
-	int port;
-	int starboard;
-	AnalogInput analogInputPort;
-	AnalogInput analogInputStarboard;
-	double voltsToFeet = 106.8521880907391270985;
-	boolean posNeg;
-	public Ultrasonic(int port, int starboard) {
-		this.port = port;
-		this.starboard = starboard;
-		this.analogInputPort = new AnalogInput(this.port);
-		this.analogInputStarboard = new AnalogInput(this.starboard);
+	int leftPort;
+	int rightPort;
+	AnalogInput leftInput;
+	AnalogInput rightInput;
+	double leftVoltage;
+	double rightVoltage;
+	final double voltsToFeet = 106.8521880907391270985;
+
+	public Ultrasonic(int leftPort, int rightPort) {
+		this.leftPort = leftPort;
+		this.rightPort = rightPort;
+		this.leftInput = new AnalogInput(this.leftPort);
+		this.rightInput = new AnalogInput(this.rightPort);
+
+	}
+
+	public void update() {
+		this.leftVoltage = this.leftInput.getVoltage();
+		this.rightVoltage = this.rightInput.getVoltage();
 	}
 
 	public double getDistance() {
-		double averageVoltage = (this.analogInputPort.getVoltage() + this.analogInputStarboard.getVoltage()) / 2;
-		double distanceFeet = averageVoltage * this.voltsToFeet;
-		return averageVoltage;
+		double averageVoltage = (this.leftVoltage + this.rightVoltage) / 2;
+		return averageVoltage * this.voltsToFeet;
+	}
+
+	public boolean isObstructed(double range) {
+		if (this.getDistance() > range){
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	public boolean isObstucted(){
+		return this.isObstructed(15);
 	}
 
 	public double getAngle() {
-		System.out.println("Hello Cooper");
-		double portInput = this.analogInputPort.getVoltage();
-		double starboardInput = this.analogInputStarboard.getVoltage();
+		double leftVoltage = this.leftVoltage;
+		double rightVoltage = this.rightVoltage;
 		double oppositeLine = 0.0;
-		if (portInput < starboardInput){
-			posNeg = true;
-			oppositeLine = starboardInput - portInput;
+		if (leftVoltage < rightVoltage) {
+			oppositeLine = -(rightVoltage - leftVoltage);
+		} else if (leftVoltage > rightVoltage) {
+			oppositeLine = leftVoltage - rightVoltage;
 		}
-		else if (portInput > starboardInput){
-			oppositeLine = portInput - starboardInput;
-		}
-		return Math.atan(oppositeLine/Constants.ultrasonic.spread);
-
+		return Math.atan(this.voltsToFeet * oppositeLine / Constants.ultrasonic.spread);
 	}
 }
