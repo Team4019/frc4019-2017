@@ -14,7 +14,7 @@ public abstract class Constants {
 	static abstract class ports {
 		static final int[] leftDrive = {0,1};
 		static final int[] rightDrive = {2, 3};
-		static final int scavenger = -1; // TODO Find actual port numbers
+		static final int scavenger = 1;
 		static final int leftClimb = 3;
 		static final int rightClimb = 9;
 		static final int leftUltrasonic = 0;

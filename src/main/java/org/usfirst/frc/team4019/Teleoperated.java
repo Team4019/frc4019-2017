@@ -53,6 +53,7 @@ public abstract class Teleoperated {
 				Drive.ds4TankDrive();
 				break;
 		}
+
 		Robot.ultrasonic.update();
 		SmartDashboard.putString("DB/String 0", Double.toString(Robot.ultrasonic.getDistance()));
 		return 0;
