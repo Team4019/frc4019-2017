@@ -15,24 +15,10 @@ public abstract class Constants {
 		static final int[] leftDrive = {0,1};
 		static final int[] rightDrive = {2, 3};
 		static final String camera = "cam0";
-		static final int leftClimb = 4;// TODO Find actual port number
-		static final int rightClimb = 5;// TODO Find actual port numbers
-		static final int leftScavange = 6;// TODO Find actual port number
-		static final int rightScavange = 7;// TODO Find actual port number
-		static final int portUltrasonic = 0;
-		static final int starboardUltrasonic = 1;
+		static final int scavenger = -1; // TODO Find actual port numbers
 	}
 
-
-	static abstract class climb {
-		static final double speed = 0.4;
-	}
-
-	static abstract class scavanger {
+	static abstract class scavenger {
 		static final double speed = 0.6;
-	}
-
-	static abstract class ultrasonic {
-		static final double spread = 1.0;
 	}
 }
