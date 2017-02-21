@@ -15,17 +15,17 @@ public abstract class Teleoperated {
 
 		// DRIVE AND ALIGN
 		if (!(Robot.rightStick.getRawButton(Constants.alignment.movementButton) || Robot.rightStick.getRawButton(Constants.alignment.rotationButton))) {
-			Robot.drive.arcadeDrive(Robot.rightStick.getY(), Robot.rightStick.getX(), (Robot.rightStick.getThrottle() - 1) / -2);
+			Robot.drive.arcadeDrive(-Robot.rightStick.getY(), Robot.rightStick.getX(), (Robot.rightStick.getThrottle() - 1) / -2);
 		} else {
 
 		}
 
 		// SCAVENGER
-		if (Robot.scavenger.scavenging && (Robot.leftStick.getRawButton(Constants.scavenger.intakeButton) || Robot.leftStick.getRawButton(Constants.scavenger.outtakeButton))) {
-			Robot.scavenger.stop();
-		} else if (Robot.leftStick.getRawButton(Constants.scavenger.intakeButton)) {
+		if (Robot.leftStick.getRawButton(Constants.scavenger.intakeButton)) {
 			Robot.scavenger.start();
 		} else if (Robot.leftStick.getRawButton(Constants.scavenger.outtakeButton)) {
+			Robot.scavenger.reverse();
+		} else {
 			Robot.scavenger.stop();
 		}
 
@@ -38,13 +38,15 @@ public abstract class Teleoperated {
 				Robot.conveyor.reverse();
 			}
 		} else {
-			Robot.shooter.stop();
+			Robot.shooter.stop((Robot.leftStick.getThrottle() - 1) / -2);
 			Robot.conveyor.stop();
 		}
 
 		// CLIMB
 		if (Robot.leftStick.getRawButton(Constants.climb.leftSafetyButton) && Robot.rightStick.getRawButton(Constants.climb.rightSafetyButton)) {
 			Robot.climb.set(Robot.leftStick.getY());
+		} else {
+			Robot.climb.stop();
 		}
 
 		return 0;
