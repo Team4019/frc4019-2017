@@ -39,12 +39,13 @@ public abstract class Teleoperated {
 			System.out.println("Drive mode changed to: " + Drive.driveMode);
 		}
 
-		switch (Drive.driveMode) {
+		/*switch (Drive.driveMode) {
 			case ARCADE:
 				break;
 			case HYBRID:
 				break;
 			case TANK:
+				Drive.tankDrive();
 				break;
 			case DS4_ARCADE:
 				Drive.ds4ArcadeDrive();
@@ -52,10 +53,23 @@ public abstract class Teleoperated {
 			case DS4_TANK:
 				Drive.ds4TankDrive();
 				break;
+		}*/
+
+		System.out.println(Robot.leftStick.joystick.getThrottle() + " | " + Robot.rightStick.joystick.getThrottle());
+
+		if (Robot.rightStick.getRawButton(1)) {
+			Robot.conveyor.set(Robot.rightStick.joystick.getThrottle());
+		} else {
+			Robot.conveyor.stop();
+		}
+		if (Robot.leftStick.getRawButton(1)) {
+			Robot.shooter.set(Robot.leftStick.joystick.getThrottle());
+		} else {
+			Robot.shooter.stop();
 		}
 
-		Robot.ultrasonic.update();
-		SmartDashboard.putString("DB/String 0", Double.toString(Robot.ultrasonic.getDistance()));
+		//Robot.ultrasonic.update();
+		//SmartDashboard.putString("DB/String 0", Double.toString(Robot.ultrasonic.getDistance()));
 		return 0;
 	}
 }

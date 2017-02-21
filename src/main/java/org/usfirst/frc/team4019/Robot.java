@@ -64,13 +64,13 @@ public class Robot extends IterativeRobot {
 	static Conveyor conveyor = new Conveyor(Constants.conveyor.conveyorID);
 	static Shooter shooter = new Shooter(Constants.shooter.leftWheelID, Constants.shooter.rightWheelID);
 	static Climb climb = new Climb(Constants.climb.leftClimbID, Constants.climb.rightClimbID);
-	static Ultrasonic ultrasonic = new Ultrasonic(Constants.ultrasonic.leftUltrasonicPort, Constants.ultrasonic.rightUltrasonicPort);
-	static Spark spark1 = new Spark(6);
-	static Spark spark2 = new Spark(7);
+	//static Ultrasonic ultrasonic = new Ultrasonic(Constants.ultrasonic.leftUltrasonicPort, Constants.ultrasonic.rightUltrasonicPort);
+	//static Spark spark1 = new Spark(6);
+	//static Spark spark2 = new Spark(7);
 
 	@Override
 	public void robotInit() {
-		rightDrive.setInverted(true);
+		leftDrive.setInverted(true);
 	}
 
 	@Override

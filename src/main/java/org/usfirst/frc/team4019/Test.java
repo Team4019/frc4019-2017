@@ -9,7 +9,7 @@ public abstract class Test {
 	}
 
 	public static int periodic() {
-		if (Robot.leftStick.getRawButton(1)) {
+		/*if (Robot.leftStick.getRawButton(1)) {
 			Robot.spark1.set(Robot.leftStick.joystick.getThrottle());
 		} else {
 			Robot.spark1.set(0);
@@ -19,7 +19,7 @@ public abstract class Test {
 			Robot.spark2.set(Robot.rightStick.joystick.getThrottle());
 		} else {
 			Robot.spark2.set(0);
-		}
+		}*/
 
 		return 0;
 	}
