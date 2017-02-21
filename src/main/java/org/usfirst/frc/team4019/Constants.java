@@ -29,8 +29,7 @@ public abstract class Constants {
 	// Settings related to the Conveyor mechanism
 	static abstract class conveyor {
 		static final int conveyorID = 2;
-		//static final int intakeButton = 6;
-		//static final int outtakeButton = 4;
+		static final int invertButton = 4;
 		static final double speed = .6;
 	}
 
@@ -47,7 +46,8 @@ public abstract class Constants {
 	static abstract class climb {
 		static final int leftClimbID = 3;
 		static final int rightClimbID = 9;
-		static final int safetyButton = 2;
+		static final int leftSafetyButton = 2;
+		static final int rightSafetyButton = 6;
 		static final double speed = 0.4;
 	}
 
@@ -56,5 +56,10 @@ public abstract class Constants {
 		static final int leftUltrasonicPort = 8;
 		static final int rightUltrasonicPort = 9;
 		static final double spread = 1.0;
+	}
+
+	static abstract class alignment {
+		static final int rotationButton = 1;
+		static final int movementButton = 2;
 	}
 }
