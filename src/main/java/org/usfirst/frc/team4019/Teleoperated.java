@@ -12,64 +12,20 @@ public abstract class Teleoperated {
 	}
 
 	public static int periodic() {
-		DriveMode previous = Drive.driveMode;
-		switch (Robot.rightStick.joystick.getPOV()) {
-			case 0:
-				Drive.driveMode = DriveMode.DS4_TANK;
-				break;
-			case 45:
-				break;
-			case 90:
-				Drive.driveMode = DriveMode.DS4_ARCADE;
-				break;
-			case 135:
-				break;
-			case 180:
-				Drive.driveMode = DriveMode.HYBRID;
-				break;
-			case 225:
-				break;
-			case 270:
-				Drive.driveMode = DriveMode.TANK;
-				break;
-			case 315:
-				break;
-		}
-		if (Drive.driveMode != previous) {
-			System.out.println("Drive mode changed to: " + Drive.driveMode);
-		}
 
-		/*switch (Drive.driveMode) {
-			case ARCADE:
-				break;
-			case HYBRID:
-				break;
-			case TANK:
-				Drive.tankDrive();
-				break;
-			case DS4_ARCADE:
-				Drive.ds4ArcadeDrive();
-				break;
-			case DS4_TANK:
-				Drive.ds4TankDrive();
-				break;
-		}*/
-
-		System.out.println(Robot.leftStick.joystick.getThrottle() + " | " + Robot.rightStick.joystick.getThrottle());
+		System.out.println(Robot.leftStick.getThrottle() + " | " + Robot.rightStick.getThrottle());
 
 		if (Robot.rightStick.getRawButton(1)) {
-			Robot.conveyor.set(Robot.rightStick.joystick.getThrottle());
+			Robot.conveyor.set(Robot.rightStick.getThrottle());
 		} else {
 			Robot.conveyor.stop();
 		}
 		if (Robot.leftStick.getRawButton(1)) {
-			Robot.shooter.set(Robot.leftStick.joystick.getThrottle());
+			Robot.shooter.set(Robot.leftStick.getThrottle());
 		} else {
 			Robot.shooter.stop();
 		}
 
-		//Robot.ultrasonic.update();
-		//SmartDashboard.putString("DB/String 0", Double.toString(Robot.ultrasonic.getDistance()));
 		return 0;
 	}
 }
