@@ -61,6 +61,7 @@ public class Robot extends IterativeRobot {
 	static TalonGroup leftDrive = new TalonGroup(Constants.drive.leftDriveID);
 	static TalonGroup rightDrive = new TalonGroup(Constants.drive.rightDriveID);
 	static Scavenger scavenger = new Scavenger(Constants.scavenger.scavengerID);
+	static Conveyor conveyor = new Conveyor(Constants.conveyor.conveyorID);
 	static Shooter shooter = new Shooter(Constants.shooter.leftWheelID, Constants.shooter.rightWheelID);
 	static Climb climb = new Climb(Constants.climb.leftClimbID, Constants.climb.rightClimbID);
 	static Ultrasonic ultrasonic = new Ultrasonic(Constants.ultrasonic.leftUltrasonicPort, Constants.ultrasonic.rightUltrasonicPort);
