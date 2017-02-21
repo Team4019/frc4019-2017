@@ -13,17 +13,40 @@ public abstract class Teleoperated {
 
 	public static int periodic() {
 
-		System.out.println(Robot.leftStick.getThrottle() + " | " + Robot.rightStick.getThrottle());
-
-		if (Robot.rightStick.getRawButton(1)) {
-			Robot.conveyor.set(Robot.rightStick.getThrottle());
+		// DRIVE AND ALIGN
+		if (!(Robot.rightStick.getRawButton(Constants.alignment.movementButton) || Robot.rightStick.getRawButton(Constants.alignment.rotationButton))) {
+			Robot.drive.arcadeDrive(-Robot.rightStick.getY(), Robot.rightStick.getX(), (Robot.rightStick.getThrottle() - 1) / -2);
 		} else {
+
+		}
+
+		// SCAVENGER
+		if (Robot.leftStick.getRawButton(Constants.scavenger.intakeButton)) {
+			Robot.scavenger.start();
+		} else if (Robot.leftStick.getRawButton(Constants.scavenger.outtakeButton)) {
+			Robot.scavenger.reverse();
+		} else {
+			Robot.scavenger.stop();
+		}
+
+		// CONVEYOR AND SHOOTER
+		if (Robot.leftStick.getRawButton(Constants.shooter.safetyButton)) {
+			Robot.shooter.set((Robot.leftStick.getThrottle() - 1) / -2);
+			if (!Robot.leftStick.getRawButton(Constants.conveyor.invertButton)) {
+				Robot.conveyor.start();
+			} else {
+				Robot.conveyor.reverse();
+			}
+		} else {
+			Robot.shooter.stop((Robot.leftStick.getThrottle() - 1) / -2);
 			Robot.conveyor.stop();
 		}
-		if (Robot.leftStick.getRawButton(1)) {
-			Robot.shooter.set(Robot.leftStick.getThrottle());
+
+		// CLIMB
+		if (Robot.leftStick.getRawButton(Constants.climb.leftSafetyButton) && Robot.rightStick.getRawButton(Constants.climb.rightSafetyButton)) {
+			Robot.climb.set(Robot.leftStick.getY());
 		} else {
-			Robot.shooter.stop();
+			Robot.climb.stop();
 		}
 
 		return 0;
