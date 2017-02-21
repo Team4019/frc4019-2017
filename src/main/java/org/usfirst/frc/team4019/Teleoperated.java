@@ -1,16 +1,13 @@
 package org.usfirst.frc.team4019;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 public abstract class Teleoperated {
 	public static int init() {
-		// CameraServer.getInstance().startAutomaticCapture();
+		Vision.start();
 		return 0;
 	}
 
 	public static int periodic() {
-		DriveMode previous = Drive.driveMode;
-		switch (Robot.rightStick.joystick.getPOV()) {
+		/*switch (Robot.rightStick.getPOV()) {
 			case 0:
 				Drive.driveMode = DriveMode.DS4_TANK;
 				break;
@@ -31,34 +28,81 @@ public abstract class Teleoperated {
 				break;
 			case 315:
 				break;
-		}
-		if (Drive.driveMode != previous) {
-			System.out.println("Drive mode changed to: " + Drive.driveMode);
+		}*/
+		switch (Robot.rightStick.rawButton()) {
+			case 7:
+				Drive.driveMode = DriveMode.ARCADE;
+				break;
+			case 8:
+				Drive.driveMode = DriveMode.HYBRID;
+				break;
+			case 9:
+				Drive.driveMode = DriveMode.TWIST;
+				break;
+			case 10:
+				Drive.driveMode = DriveMode.TRIPLE;
+				break;
+			case 11:
+				Drive.driveMode = DriveMode.TANK;
+				break;
 		}
 
+		double[] speeds = {0, 0};
 		switch (Drive.driveMode) {
 			case ARCADE:
+				speeds = Drive.arcadeDrive();
 				break;
 			case HYBRID:
+				speeds = Drive.hybridDrive();
+				break;
+			case TWIST:
+				speeds = Drive.twistDrive();
+				break;
+			case TRIPLE:
+				speeds = Drive.tripleDrive();
 				break;
 			case TANK:
+				speeds = Drive.tankDrive();
 				break;
 			case DS4_ARCADE:
-				Drive.ds4ArcadeDrive();
+				speeds = Drive.ds4ArcadeDrive();
 				break;
 			case DS4_TANK:
-				Drive.ds4TankDrive();
+				speeds = Drive.ds4TankDrive();
 				break;
 		}
 
-		Robot.video.grabFrame(Vision.source);
-		Vision.filter();
-		// Vision.process();
-		Robot.stream.putFrame(Vision.filtered);
+		// Auto adjust (Work in progress)
+		if (Robot.rightStick.getRawButton(3) && Vision.boilerAngle.value != null) {
+			/*if (Vision.boilerAngle.value < -10) {
+				Drive.setMotors(0.2, -0.2);
+			} else if (Vision.boilerAngle.value < -2) {
+				Drive.setMotors(0.15, -0.15);
+			} else if (Vision.boilerAngle.value > 10) {
+				Drive.setMotors(-0.2, 0.2);
+			} else if (Vision.boilerAngle.value > 2) {
+				Drive.setMotors(-0.15, 0.15);
+			}*/
+			if (Math.abs(Vision.boilerAngle.value) > 2.5) {
+				//Drive.setMotors(Vision.boilerAngle.value * -0.025, Vision.boilerAngle.value * 0.025);
+				speeds[0] += Math.cbrt(Vision.boilerAngle.value) * -0.075;
+				speeds[1] += Math.cbrt(Vision.boilerAngle.value) * 0.075;
+			}
+		}
+		if (Robot.rightStick.getRawButton(5) && Vision.boilerDistance.value != null) {
+			if (Math.abs(Vision.boilerDistance.value - 72) > 1.5) {
+				//double speed = Exponent.odd(Vision.boilerDistance.value - 72, 2) * 0.005;
+				//speeds[0] += speed;
+				//speeds[1] += speed;
+			}
+		}
 
-		Distance distance = Robot.ultrasonic.getDistance();
-		SmartDashboard.putString("DB/String 0", distance.getString());
-		SmartDashboard.putString("DB/String 1", String.valueOf(distance.value));
+		Dashboard.write(0, Drive.driveMode.toString());
+		Dashboard.write(1, Robot.ultrasonic.getDistance().getString());
+		Dashboard.write(2, Vision.boilerDistance.getString());
+		Dashboard.write(3, Vision.boilerAngle.getString());
+		Robot.drivetrain.set(speeds);
+
 		return 0;
 	}
 }

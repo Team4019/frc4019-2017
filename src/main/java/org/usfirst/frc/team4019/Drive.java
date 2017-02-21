@@ -1,67 +1,48 @@
 package org.usfirst.frc.team4019;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 enum DriveMode {ARCADE, TANK, TWIST, TRIPLE, HYBRID, DS4_ARCADE, DS4_TANK}
 
 public abstract class Drive {
-	static DriveMode driveMode = DriveMode.DS4_TANK;
+	static DriveMode driveMode = DriveMode.ARCADE;
 
-	static void arcadeDrive() {
-		double forward = Robot.rightStick.getY() * getDBSlider(0);
-		double rotation = Robot.rightStick.getX() * getDBSlider(1);
-
-		double left = forward + rotation;
-		double right = forward - rotation;
-
-		setMotors(left, right);
+	static double[] arcadeDrive() {
+		double forward = Robot.rightStick.getY() * Robot.rightStick.getThrottle();
+		double rotation = Robot.rightStick.getX() * Robot.rightStick.getThrottle();
+		return new double[] {forward + rotation, forward - rotation};
 	}
 
-	static void tankDrive() {
-		double left = Robot.leftStick.getY() * getDBSlider(0);
-		double right = Robot.leftStick.getX() * getDBSlider(0);
-
-		setMotors(left, right);
+	static double[] tankDrive() {
+		double left = Robot.leftStick.getY() * Robot.rightStick.getThrottle();
+		double right = Robot.rightStick.getY() * Robot.rightStick.getThrottle();
+		return new double[] {left, right};
 	}
 
-	static void hybridDrive() {
-
+	static double[] hybridDrive() {
+		return new double[] {0, 0};
 	}
 
-	static void twistDrive() {
-
+	static double[] twistDrive() {
+		double forward = Robot.rightStick.getY() * Robot.rightStick.getThrottle();
+		double rotation = Robot.rightStick.getTwist() * Robot.rightStick.getThrottle();
+		return new double[] {forward + rotation, forward - rotation};
 	}
 
-	static void tripleDrive() {
-
+	static double[] tripleDrive() {
+		return new double[] {0, 0};
 	}
 
-	static void ds4ArcadeDrive() {
-		double forward = -Robot.rightStick.joystick.getY() * getDBSlider(0);
-		double rotation = Robot.rightStick.joystick.getX() * getDBSlider(1);
-
-		double left = forward + rotation;
-		double right = forward - rotation;
-
-		setMotors(left, right);
+	static double[] ds4ArcadeDrive() {
+		double forward = Robot.rightStick.getY() * Dashboard.getSlider(0) / 5;
+		double rotation = Robot.rightStick.getX() * Dashboard.getSlider(0) / 5;
+		return new double[] {forward + rotation, forward - rotation};
 	}
 
-	static void ds4TankDrive() {
-		double throttle = (1 - getDBSlider(2)) / 2;
-		double leftThrottle = (-Robot.rightStick.joystick.getRawAxis(3) * throttle) + (1 - throttle);
-		double rightThrottle = (-Robot.rightStick.joystick.getRawAxis(4) * throttle) + (1 - throttle);
-		double left = -Robot.rightStick.joystick.getRawAxis(1) * leftThrottle;
-		double right = -Robot.rightStick.joystick.getRawAxis(5) * rightThrottle;
-		setMotors(left * getDBSlider(0), right * getDBSlider(0));
-	}
-
-	static double getDBSlider(int id) {
-		return SmartDashboard.getNumber("DB/Slider " + id) / 5;
-	}
-
-	static void setMotors(double left, double right) {
-		Robot.leftDrive.set(left);
-		Robot.rightDrive.set(right);
+	static double[] ds4TankDrive() {
+		double throttle = (1 - Dashboard.getSlider(0) / 5) / 2;
+		double leftThrottle = (-Robot.rightStick.getRawAxis(3) * throttle) + (1 - throttle);
+		double rightThrottle = (-Robot.rightStick.getRawAxis(4) * throttle) + (1 - throttle);
+		double left = -Robot.rightStick.getRawAxis(1) * leftThrottle;
+		double right = -Robot.rightStick.getRawAxis(5) * rightThrottle;
+		return new double[] {left, right};
 	}
 }

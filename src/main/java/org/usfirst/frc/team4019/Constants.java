@@ -17,6 +17,22 @@ public abstract class Constants {
 	// Information relating to the camera (excluding its port)
 	static abstract class camera {
 		static int[] size = {640, 480};
-		// need FOV for calculations
+		static double fov = 50; // degrees
+	}
+
+	// Information relating to the game field
+	static abstract class field {
+		static double boilerWidth = 15; // inches
+	}
+
+	// Information relating to the ball shooter
+	static abstract class shooter {
+		static double angle = 60; // degrees
+		static double coefficient;
+	}
+
+	// Physical constants used for calculations
+	static abstract class physics {
+		static double gravity;
 	}
 }
