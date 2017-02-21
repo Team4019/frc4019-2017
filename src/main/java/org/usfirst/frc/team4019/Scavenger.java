@@ -1,35 +1,42 @@
 package org.usfirst.frc.team4019;
 
 import com.ctre.CANTalon;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Scavenger {
+	enum ScavengeMode {INTAKE, OUTTAKE, STOPPED}
+
     CANTalon motor;
-    double multiplier = 1;
-    boolean scavenging = false;
+    ScavengeMode scavenging;
 
     public Scavenger(int talonID) {
         this.motor = new CANTalon(talonID);
-    }
-
-    public Scavenger(int talonID, double multiplier) {
-        this.motor = new CANTalon(talonID);
-        this.multiplier = multiplier;
+        this.motor.setInverted(Constants.scavenger.invertScavenger);
+        this.scavenging = ScavengeMode.STOPPED;
+        this.setDashboard();
     }
 
     public void start() {
-        this.motor.set(this.multiplier);
-        this.scavenging = true;
+        this.motor.set(Constants.scavenger.speed);
+        this.scavenging = ScavengeMode.INTAKE;
+        this.setDashboard();
     }
 
     public void reverse() {
-        this.motor.set(-this.multiplier);
-        this.scavenging = true;
+        this.motor.set(-Constants.scavenger.speed);
+	    this.scavenging = ScavengeMode.OUTTAKE;
+	    this.setDashboard();
     }
 
     public void stop() {
-        if (this.scavenging) {
+        if (this.scavenging != ScavengeMode.STOPPED) {
             this.motor.set(0);
-            this.scavenging = false;
+	        this.scavenging = ScavengeMode.STOPPED;
+	        this.setDashboard();
         }
+    }
+
+    public void setDashboard() {
+	    //SmartDashboard.putString(Constants.scavenger.dashboard, "SCAVENGER: " + this.scavenging + ";");
     }
 }
