@@ -9,8 +9,12 @@ public class Conveyor {
 		this.motor = new CANTalon(talonID);
 	}
 
-	public void set(double value) {
-		this.motor.set(value * Constants.conveyor.speed);
+	public void start() {
+		this.motor.set(Constants.conveyor.speed);
+	}
+
+	public void reverse() {
+		this.motor.set(-Constants.conveyor.speed);
 	}
 
 	public void stop() {
