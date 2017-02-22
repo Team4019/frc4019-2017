@@ -4,7 +4,7 @@ import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter {
-	enum ShootingMode {SHOOTING, STOPPED}
+	enum ShootingMode {SHOOT, STOPPED}
 
 	CANTalon leftWheel;
 	CANTalon rightWheel;
@@ -16,13 +16,12 @@ public class Shooter {
 		this.leftWheel.setInverted(Constants.shooter.invertLeftWheel);
 		this.rightWheel.setInverted(Constants.shooter.invertRightWheel);
 		this.shooting = ShootingMode.STOPPED;
-		this.setDashboard(0);
 	}
 
 	public void set(double value) {
 		this.leftWheel.set(value * Constants.shooter.speed);
 		this.rightWheel.set(value * Constants.shooter.speed);
-		this.shooting = ShootingMode.SHOOTING;
+		this.shooting = ShootingMode.SHOOT;
 		this.setDashboard(value);
 	}
 
@@ -30,11 +29,12 @@ public class Shooter {
 		if (this.shooting != ShootingMode.STOPPED) {
 			this.leftWheel.set(0);
 			this.rightWheel.set(0);
+			this.shooting = ShootingMode.STOPPED;
 		}
 		this.setDashboard(value);
 	}
 
 	public void setDashboard(double value) {
-		//SmartDashboard.putString(Constants.shooter.dashboard, "SHOOTER: " + this.shooting + "; " + Math.round(value * 100) + "%");
+		SmartDashboard.putString(Constants.shooter.dashboard, "SHOOTER: " + this.shooting + "; " + Math.round(value * 100) + "%");
 	}
 }

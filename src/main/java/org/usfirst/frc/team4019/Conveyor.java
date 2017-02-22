@@ -13,7 +13,6 @@ public class Conveyor {
 		this.motor = new CANTalon(talonID);
 		this.motor.setInverted(Constants.conveyor.invertConveyor);
 		this.conveyorMode = ConveyorMode.STOPPED;
-		this.setDashboard();
 	}
 
 	public void start() {
@@ -37,6 +36,6 @@ public class Conveyor {
 	}
 
 	public void setDashboard() {
-		//SmartDashboard.putString(Constants.conveyor.dashboard, "CONVEYOR: " + this.conveyorMode + ";");
+		SmartDashboard.putString(Constants.conveyor.dashboard, "CONVEYOR: " + this.conveyorMode + ";");
 	}
 }

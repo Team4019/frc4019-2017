@@ -3,6 +3,7 @@ package org.usfirst.frc.team4019;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public abstract class Teleoperated {
@@ -48,6 +49,7 @@ public abstract class Teleoperated {
 		} else {
 			Robot.climb.stop();
 		}
+		Robot.climb.setDashboard(Robot.leftStick.getRawButton(Constants.climb.leftSafetyButton), Robot.rightStick.getRawButton(Constants.climb.rightSafetyButton), -Robot.leftStick.getY());
 
 		return 0;
 	}

@@ -25,6 +25,6 @@ public class Climb {
 	}
 
 	public void setDashboard(boolean left, boolean right, double axis) {
-		//SmartDashboard.putString(Constants.climb.dashboard, "CLIMB: L: " + (left ? "T" : "F") + "; R: " + (right ? "T" : "F") + "; " + Math.round(axis * 100) + "%");
+		SmartDashboard.putString(Constants.climb.dashboard, "CLIMB: " + left + ", " + right + "; " + Math.round(axis * 100) + "%");
 	}
 }

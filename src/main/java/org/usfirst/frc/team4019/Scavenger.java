@@ -13,7 +13,6 @@ public class Scavenger {
         this.motor = new CANTalon(talonID);
         this.motor.setInverted(Constants.scavenger.invertScavenger);
         this.scavenging = ScavengeMode.STOPPED;
-        this.setDashboard();
     }
 
     public void start() {
@@ -37,6 +36,6 @@ public class Scavenger {
     }
 
     public void setDashboard() {
-	    //SmartDashboard.putString(Constants.scavenger.dashboard, "SCAVENGER: " + this.scavenging + ";");
+	    SmartDashboard.putString(Constants.scavenger.dashboard, "SCAVENGER: " + this.scavenging + ";");
     }
 }

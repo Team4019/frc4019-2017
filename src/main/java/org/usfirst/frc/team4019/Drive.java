@@ -38,13 +38,12 @@ public class Drive {
 		this.rightDrive = new TalonGroup(Constants.drive.rightThrottle * Constants.drive.throttle, rightDriveID);
 		this.leftDrive.setInverted(Constants.drive.invertLeft);
 		this.rightDrive.setInverted(Constants.drive.invertRight);
-		//SmartDashboard.putString(Constants.drive.dashboard, "DRIVE: DISABLED; 0%");
 	}
 
 	public void arcadeDrive(double forward, double rotation, double throttle) {
 		this.leftDrive.set((forward + rotation) * throttle);
 		this.rightDrive.set((forward - rotation) * throttle);
-		//SmartDashboard.putString(Constants.drive.dashboard, "DRIVE: ARCADE; " + Math.round(throttle * 100) + "%");
+		SmartDashboard.putString(Constants.drive.dashboard, "DRIVE: ARCADE; " + Math.round(throttle * 100) + "%");
 	}
 
 	public void arcadeDrive(double forward, double rotation) {
@@ -54,7 +53,7 @@ public class Drive {
 	public void tankDrive(double left, double right, double throttle) {
 		this.leftDrive.set(left * throttle);
 		this.rightDrive.set(right * throttle);
-		//SmartDashboard.putString(Constants.drive.dashboard, "DRIVE: TANK; " + Math.round(throttle * 100) + "%");
+		SmartDashboard.putString(Constants.drive.dashboard, "DRIVE: TANK; " + Math.round(throttle * 100) + "%");
 	}
 
 	public void tankDrive(double left, double right) {
