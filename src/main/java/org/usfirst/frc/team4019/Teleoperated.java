@@ -3,6 +3,7 @@ package org.usfirst.frc.team4019;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public abstract class Teleoperated {
@@ -12,51 +13,44 @@ public abstract class Teleoperated {
 	}
 
 	public static int periodic() {
-		DriveMode previous = Drive.driveMode;
-		switch (Robot.rightStick.joystick.getPOV()) {
-			case 0:
-				Drive.driveMode = DriveMode.DS4_TANK;
-				break;
-			case 45:
-				break;
-			case 90:
-				Drive.driveMode = DriveMode.DS4_ARCADE;
-				break;
-			case 135:
-				break;
-			case 180:
-				Drive.driveMode = DriveMode.HYBRID;
-				break;
-			case 225:
-				break;
-			case 270:
-				Drive.driveMode = DriveMode.TANK;
-				break;
-			case 315:
-				break;
-		}
-		if (Drive.driveMode != previous) {
-			System.out.println("Drive mode changed to: " + Drive.driveMode);
+
+		// DRIVE AND ALIGN
+		if (!(Robot.rightStick.getRawButton(Constants.alignment.movementButton) || Robot.rightStick.getRawButton(Constants.alignment.rotationButton))) {
+			Robot.drive.arcadeDrive(-Robot.rightStick.getY(), Robot.rightStick.getX(), (Robot.rightStick.getThrottle() - 1) / -2);
+		} else {
+
 		}
 
-		switch (Drive.driveMode) {
-			case ARCADE:
-				break;
-			case HYBRID:
-				break;
-			case TANK:
-				break;
-			case DS4_ARCADE:
-				Drive.ds4ArcadeDrive();
-				break;
-			case DS4_TANK:
-				Drive.ds4TankDrive();
-				break;
+		// SCAVENGER
+		if (Robot.leftStick.getRawButton(Constants.scavenger.intakeButton)) {
+			Robot.scavenger.start();
+		} else if (Robot.leftStick.getRawButton(Constants.scavenger.outtakeButton)) {
+			Robot.scavenger.reverse();
+		} else {
+			Robot.scavenger.stop();
 		}
 
-		Distance distance = Robot.ultrasonic.getDistance();
-		SmartDashboard.putString("DB/String 0", distance.getString());
-		SmartDashboard.putString("DB/String 1", String.valueOf(distance.value));
+		// CONVEYOR AND SHOOTER
+		if (Robot.leftStick.getRawButton(Constants.shooter.safetyButton)) {
+			Robot.shooter.set((Robot.leftStick.getThrottle() - 1) / -2);
+			if (!Robot.leftStick.getRawButton(Constants.conveyor.invertButton)) {
+				Robot.conveyor.start();
+			} else {
+				Robot.conveyor.reverse();
+			}
+		} else {
+			Robot.shooter.stop((Robot.leftStick.getThrottle() - 1) / -2);
+			Robot.conveyor.stop();
+		}
+
+		// CLIMB
+		if (Robot.leftStick.getRawButton(Constants.climb.leftSafetyButton) && Robot.rightStick.getRawButton(Constants.climb.rightSafetyButton)) {
+			Robot.climb.set(Robot.leftStick.getY());
+		} else {
+			Robot.climb.stop();
+		}
+		Robot.climb.setDashboard(Robot.leftStick.getRawButton(Constants.climb.leftSafetyButton), Robot.rightStick.getRawButton(Constants.climb.rightSafetyButton), -Robot.leftStick.getY());
+
 		return 0;
 	}
 }

@@ -1,67 +1,62 @@
 package org.usfirst.frc.team4019;
 
-import edu.wpi.first.wpilibj.Joystick;
+import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-enum DriveMode {ARCADE, TANK, TWIST, TRIPLE, HYBRID, DS4_ARCADE, DS4_TANK}
+import java.util.ArrayList;
 
 public class Drive {
-	static DriveMode driveMode = DriveMode.DS4_TANK;
+	static class TalonGroup {
+		ArrayList<CANTalon> talons;
+		double throttle;
 
-	static void arcadeDrive() {
-		double forward = Robot.rightStick.getY() * getDBSlider(0);
-		double rotation = Robot.rightStick.getX() * getDBSlider(1);
+		TalonGroup(double throttle, int... args) {
+			this.throttle = throttle;
+			this.talons = new ArrayList<>();
+			for (int arg : args) {
+				talons.add(new CANTalon(arg));
+			}
+		}
 
-		double left = forward + rotation;
-		double right = forward - rotation;
+		public void set(double value) {
+			for (CANTalon talon : this.talons) {
+				talon.set(value * this.throttle);
+			}
+		}
 
-		setMotors(left, right);
+		public void setInverted(boolean value) {
+			for (CANTalon talon : this.talons) {
+				talon.setInverted(value);
+			}
+		}
+	}
+	TalonGroup leftDrive;
+	TalonGroup rightDrive;
+
+	public Drive(int[] leftDriveID, int[] rightDriveID) {
+		this.leftDrive = new TalonGroup(Constants.drive.leftThrottle * Constants.drive.throttle, leftDriveID);
+		this.rightDrive = new TalonGroup(Constants.drive.rightThrottle * Constants.drive.throttle, rightDriveID);
+		this.leftDrive.setInverted(Constants.drive.invertLeft);
+		this.rightDrive.setInverted(Constants.drive.invertRight);
 	}
 
-	static void tankDrive() {
-		double left = Robot.leftStick.getY() * getDBSlider(0);
-		double right = Robot.leftStick.getX() * getDBSlider(0);
-
-		setMotors(left, right);
+	public void arcadeDrive(double forward, double rotation, double throttle) {
+		this.leftDrive.set((forward + rotation) * throttle);
+		this.rightDrive.set((forward - rotation) * throttle);
+		SmartDashboard.putString(Constants.drive.dashboard, "DRIVE: ARCADE; " + Math.round(throttle * 100) + "%");
 	}
 
-	static void hybridDrive() {
-
+	public void arcadeDrive(double forward, double rotation) {
+		this.arcadeDrive(forward, rotation, 1);
 	}
 
-	static void twistDrive() {
-
+	public void tankDrive(double left, double right, double throttle) {
+		this.leftDrive.set(left * throttle);
+		this.rightDrive.set(right * throttle);
+		SmartDashboard.putString(Constants.drive.dashboard, "DRIVE: TANK; " + Math.round(throttle * 100) + "%");
 	}
 
-	static void tripleDrive() {
-
-	}
-
-	static void ds4ArcadeDrive() {
-		double forward = -Robot.rightStick.joystick.getY() * getDBSlider(0);
-		double rotation = Robot.rightStick.joystick.getX() * getDBSlider(1);
-
-		double left = forward + rotation;
-		double right = forward - rotation;
-
-		setMotors(left, right);
-	}
-
-	static void ds4TankDrive() {
-		double throttle = (1 - getDBSlider(2)) / 2;
-		double leftThrottle = (-Robot.rightStick.joystick.getRawAxis(3) * throttle) + (1 - throttle);
-		double rightThrottle = (-Robot.rightStick.joystick.getRawAxis(4) * throttle) + (1 - throttle);
-		double left = -Robot.rightStick.joystick.getRawAxis(1) * leftThrottle;
-		double right = -Robot.rightStick.joystick.getRawAxis(5) * rightThrottle;
-		setMotors(left * getDBSlider(0), right * getDBSlider(0));
-	}
-
-	static double getDBSlider(int id) {
-		return SmartDashboard.getNumber("DB/Slider " + id) / 5;
-	}
-
-	static void setMotors(double left, double right) {
-		Robot.leftDrive.set(left);
-		Robot.rightDrive.set(right);
+	public void tankDrive(double left, double right) {
+		this.tankDrive(left, right, 1);
 	}
 }

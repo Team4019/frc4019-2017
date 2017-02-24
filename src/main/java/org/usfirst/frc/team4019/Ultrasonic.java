@@ -2,82 +2,54 @@ package org.usfirst.frc.team4019;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 
-class Distance {
-	double value;
-	public Distance(double value) {
-		this.value = value;
-	}
-
-	double getFeet() {
-		return this.value / 12;
-	}
-
-	int getFeetRound() {
-		return (int) Math.round(this.getFeet());
-	}
-
-	int getFeetFloor() {
-		return (int) Math.floor(this.getFeet());
-	}
-
-	int getFeetCeil() {
-		return (int) Math.ceil(this.getFeet());
-	}
-
-	double getInches() {
-		return this.value % 12;
-	}
-
-	int getInchesRound() {
-		return (int) Math.round(this.getInches());
-	}
-
-	int getInchesFloor() {
-		return (int) Math.floor(this.getInches());
-	}
-
-	int getInchesCeil() {
-		return (int) Math.ceil(this.getInches());
-	}
-
-	double getInchesTotal() {
-		return this.value;
-	}
-
-	int getTotalInchesRound() {
-		return (int) Math.round(this.getInchesTotal());
-	}
-
-	int getTotalInchesFloor() {
-		return (int) Math.floor(this.getInchesTotal());
-	}
-
-	int getTotalInchesCeil() {
-		return (int) Math.ceil(this.getInchesTotal());
-	}
-
-	String getString() {
-		int feet = this.getFeetFloor();
-		int inches = this.getInchesFloor();
-		return feet + "' " + inches + "\"";
-	}
-}
-
 public class Ultrasonic {
-	int port;
-	AnalogInput analogInput;
-	static double voltsToFeetGlobal = 0.0093587227165699;
-	double voltsToFeet = Ultrasonic.voltsToFeetGlobal;
-	public Ultrasonic(int port) {
-		this.port = port;
-		this.analogInput = new AnalogInput(this.port);
+	int leftPort;
+	int rightPort;
+	AnalogInput leftInput;
+	AnalogInput rightInput;
+	double leftVoltage;
+	double rightVoltage;
+	final double voltsToFeet = 106.8521880907391270985;
+
+	public Ultrasonic(int leftPort, int rightPort) {
+		this.leftPort = leftPort;
+		this.rightPort = rightPort;
+		this.leftInput = new AnalogInput(this.leftPort);
+		this.rightInput = new AnalogInput(this.rightPort);
+
 	}
 
-	Distance getDistance() {
-		return new Distance(this.analogInput.getVoltage() / this.voltsToFeet);
+	public void update() {
+		this.leftVoltage = this.leftInput.getVoltage();
+		this.rightVoltage = this.rightInput.getVoltage();
 	}
 
-	Distance getRound() {
-		return new Distance(Math.round(this.analogInput.getVoltage() / this.voltsToFeet));
+	public double getDistance() {
+		double averageVoltage = (this.leftVoltage + this.rightVoltage) / 2;
+		return averageVoltage * this.voltsToFeet;
+	}
+
+	public boolean isObstructed(double range) {
+		if (this.getDistance() > range){
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	public boolean isObstucted(){
+		return this.isObstructed(15);
+	}
+
+	public double getAngle() {
+		double leftVoltage = this.leftVoltage;
+		double rightVoltage = this.rightVoltage;
+		double oppositeLine = 0.0;
+		if (leftVoltage < rightVoltage) {
+			oppositeLine = -(rightVoltage - leftVoltage);
+		} else if (leftVoltage > rightVoltage) {
+			oppositeLine = leftVoltage - rightVoltage;
+		}
+		return Math.atan(this.voltsToFeet * oppositeLine / Constants.ultrasonic.spread);
 	}
 }
