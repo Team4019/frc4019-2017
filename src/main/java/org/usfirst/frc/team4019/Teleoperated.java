@@ -1,8 +1,6 @@
 package org.usfirst.frc.team4019;
 
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -14,11 +12,13 @@ public abstract class Teleoperated {
 
 	public static int periodic() {
 
+		Robot.test.set(SmartDashboard.getBoolean("DB/Button 0") ? Relay.Value.kOn : Relay.Value.kOff);
+
 		// DRIVE AND ALIGN
 		if (!(Robot.rightStick.getRawButton(Constants.alignment.movementButton) || Robot.rightStick.getRawButton(Constants.alignment.rotationButton))) {
-			Robot.drive.arcadeDrive(-Robot.rightStick.getY(), Robot.rightStick.getX(), (Robot.rightStick.getThrottle() - 1) / -2);
+			Robot.drivetrain.drive(-Robot.rightStick.getY(), Robot.rightStick.getX(), (Robot.rightStick.getThrottle() - 1) / -2);
 		} else {
-
+			Assist.assist(Robot.rightStick.getRawButton(Constants.alignment.movementButton), Robot.rightStick.getRawButton(Constants.alignment.rotationButton));
 		}
 
 		// SCAVENGER
@@ -44,12 +44,12 @@ public abstract class Teleoperated {
 		}
 
 		// CLIMB
-		if (Robot.leftStick.getRawButton(Constants.climb.leftSafetyButton) && Robot.rightStick.getRawButton(Constants.climb.rightSafetyButton)) {
+		if (Robot.leftStick.getRawButton(Constants.climb.safetyButton)) {
 			Robot.climb.set(Robot.leftStick.getY());
 		} else {
 			Robot.climb.stop();
 		}
-		Robot.climb.setDashboard(Robot.leftStick.getRawButton(Constants.climb.leftSafetyButton), Robot.rightStick.getRawButton(Constants.climb.rightSafetyButton), -Robot.leftStick.getY());
+		Robot.climb.setDashboard(Robot.leftStick.getRawButton(Constants.climb.safetyButton), -Robot.leftStick.getY());
 
 		return 0;
 	}
