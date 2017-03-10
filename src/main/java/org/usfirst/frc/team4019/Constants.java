@@ -47,6 +47,7 @@ public abstract class Constants {
 		static final int safetyButton = 1;
 		static final int throttleAxis = 6;
 		static final double speed = 1.0;
+		static final double angle = 60; // degrees
 		static final String dashboard = "DB/String 3";
 	}
 
@@ -56,8 +57,7 @@ public abstract class Constants {
 		static final int rightClimbID = 9;
 		static final boolean invertLeftClimb = true;
 		static final boolean invertRightClimb = false;
-		static final int leftSafetyButton = 2;
-		static final int rightSafetyButton = 6;
+		static final int safetyButton = 2;
 		static final double speed = 0.4;
 		static final String dashboard = "DB/String 4";
 	}
@@ -72,5 +72,17 @@ public abstract class Constants {
 	static abstract class alignment {
 		static final int rotationButton = 1;
 		static final int movementButton = 2;
+	}
+
+	// Information relating to the camera (excluding its port)
+	static abstract class camera {
+		static final String cameraID = "USB Camera 0";
+		static final int[] size = {640, 480};
+		static final double fov = 50; // degrees
+	}
+
+	// Information relating to the game field
+	static abstract class field {
+		static final double boilerWidth = 15; // inches
 	}
 }

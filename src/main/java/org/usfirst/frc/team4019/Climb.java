@@ -24,7 +24,7 @@ public class Climb {
 		this.rightMotor.set(0);
 	}
 
-	public void setDashboard(boolean left, boolean right, double axis) {
-		SmartDashboard.putString(Constants.climb.dashboard, "CLIMB: " + left + ", " + right + "; " + Math.round(axis * 100) + "%");
+	public void setDashboard(boolean enabled, double axis) {
+		SmartDashboard.putString(Constants.climb.dashboard, "CLIMB: " + enabled + "; " + Math.round(axis * 100) + "%");
 	}
 }

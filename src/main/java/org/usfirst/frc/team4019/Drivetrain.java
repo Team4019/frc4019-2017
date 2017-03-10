@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.util.ArrayList;
 
-public class Drive {
+public class Drivetrain {
 	static class TalonGroup {
 		ArrayList<CANTalon> talons;
 		double throttle;
@@ -33,30 +33,20 @@ public class Drive {
 	TalonGroup leftDrive;
 	TalonGroup rightDrive;
 
-	public Drive(int[] leftDriveID, int[] rightDriveID) {
+	public Drivetrain(int[] leftDriveID, int[] rightDriveID) {
 		this.leftDrive = new TalonGroup(Constants.drive.leftThrottle * Constants.drive.throttle, leftDriveID);
 		this.rightDrive = new TalonGroup(Constants.drive.rightThrottle * Constants.drive.throttle, rightDriveID);
 		this.leftDrive.setInverted(Constants.drive.invertLeft);
 		this.rightDrive.setInverted(Constants.drive.invertRight);
 	}
 
-	public void arcadeDrive(double forward, double rotation, double throttle) {
+	public void drive(double forward, double rotation, double throttle) {
 		this.leftDrive.set((forward + rotation) * throttle);
 		this.rightDrive.set((forward - rotation) * throttle);
 		SmartDashboard.putString(Constants.drive.dashboard, "DRIVE: ARCADE; " + Math.round(throttle * 100) + "%");
 	}
 
-	public void arcadeDrive(double forward, double rotation) {
-		this.arcadeDrive(forward, rotation, 1);
-	}
-
-	public void tankDrive(double left, double right, double throttle) {
-		this.leftDrive.set(left * throttle);
-		this.rightDrive.set(right * throttle);
-		SmartDashboard.putString(Constants.drive.dashboard, "DRIVE: TANK; " + Math.round(throttle * 100) + "%");
-	}
-
-	public void tankDrive(double left, double right) {
-		this.tankDrive(left, right, 1);
+	public void drive(double forward, double rotation) {
+		this.drive(forward, rotation, 1);
 	}
 }
