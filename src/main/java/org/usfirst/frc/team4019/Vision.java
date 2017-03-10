@@ -46,9 +46,9 @@ public abstract class Vision {
 	static MatOfPoint boundary = null;
 	static Integer minimum = null;
 	static Integer maximum = null;
-	static Distance boilerDistance = new Distance(null);
-	static Angle boilerAngle = new Angle(null);
-	static Distance liftDistance = new Distance(null);
+	static Double boilerDistance = null;
+	static Double boilerAngle = null;
+	static Double liftDistance = null;
 	static VisionThread thread = new VisionThread();
 
 	public static MatOfPoint largestContour(List<MatOfPoint> contours) {
@@ -108,12 +108,15 @@ public abstract class Vision {
 				if (minimum == null || (minimum != null && vertex.x < minimum)) minimum = (int) vertex.x;
 				if (maximum == null || (minimum != null && vertex.x > maximum)) maximum = (int) vertex.x;
 			}
-			boilerDistance = new Distance(Constants.field.boilerWidth / 2 / Math.tan(Math.toRadians(Constants.camera.fov) * (maximum - minimum + 1) / Constants.camera.size[0] / 2));
-			boilerAngle = new Angle(Constants.camera.fov * (0.5 - (double) (maximum + minimum) / 2 / Constants.camera.size[0]));
+			boilerDistance = Constants.field.boilerWidth / 2 / Math.tan(Math.toRadians(Constants.camera.fov) * (maximum - minimum + 1) / Constants.camera.size[0] / 2);
+			boilerAngle = Constants.camera.fov * (0.5 - (double) (maximum + minimum) / 2 / Constants.camera.size[0]);
 		} else {
-			boilerDistance = new Distance(null);
-			boilerAngle = new Angle(null);
+			boilerDistance = null;
+			boilerAngle = null;
 		}
+
+		Dashboard.write(5, (int) Math.round(boilerDistance) / 12 + "' " + (int) Math.round(boilerDistance) % 12 + "\"");
+		Dashboard.write(6, (int) Math.round(boilerAngle) + " deg");
 	}
 
 	public static void trackLift() {

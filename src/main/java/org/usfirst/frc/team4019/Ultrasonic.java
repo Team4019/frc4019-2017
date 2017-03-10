@@ -3,19 +3,53 @@ package org.usfirst.frc.team4019;
 import edu.wpi.first.wpilibj.AnalogInput;
 
 public class Ultrasonic {
-	static private double voltsToFeet = 0.0093587227165699;
+	int leftPort;
+	int rightPort;
+	AnalogInput leftInput;
+	AnalogInput rightInput;
+	double leftVoltage;
+	double rightVoltage;
+	final double voltsToFeet = 106.8521880907391270985;
 
-	AnalogInput analogInput;
+	public Ultrasonic(int leftPort, int rightPort) {
+		this.leftPort = leftPort;
+		this.rightPort = rightPort;
+		this.leftInput = new AnalogInput(this.leftPort);
+		this.rightInput = new AnalogInput(this.rightPort);
 
-	public Ultrasonic(int port) {
-		this.analogInput = new AnalogInput(port);
 	}
 
-	Distance getDistance() {
-		return new Distance(this.analogInput.getVoltage() / voltsToFeet);
+	public void update() {
+		this.leftVoltage = this.leftInput.getVoltage();
+		this.rightVoltage = this.rightInput.getVoltage();
 	}
 
-	Distance getRound() {
-		return new Distance(Math.round(this.analogInput.getVoltage() / voltsToFeet));
+	public double getDistance() {
+		double averageVoltage = (this.leftVoltage + this.rightVoltage) / 2;
+		return averageVoltage * this.voltsToFeet;
+	}
+
+	public boolean isObstructed(double range) {
+		if (this.getDistance() > range){
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	public boolean isObstucted(){
+		return this.isObstructed(15);
+	}
+
+	public double getAngle() {
+		double leftVoltage = this.leftVoltage;
+		double rightVoltage = this.rightVoltage;
+		double oppositeLine = 0.0;
+		if (leftVoltage < rightVoltage) {
+			oppositeLine = -(rightVoltage - leftVoltage);
+		} else if (leftVoltage > rightVoltage) {
+			oppositeLine = leftVoltage - rightVoltage;
+		}
+		return Math.atan(this.voltsToFeet * oppositeLine / Constants.ultrasonic.spread);
 	}
 }
