@@ -1,7 +1,6 @@
 package org.usfirst.frc.team4019;
 
 import com.ctre.CANTalon;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.util.ArrayList;
 
@@ -36,14 +35,14 @@ public class Drivetrain {
 	public Drivetrain(int[] leftDriveID, int[] rightDriveID) {
 		this.leftDrive = new TalonGroup(Constants.drive.leftThrottle * Constants.drive.throttle, leftDriveID);
 		this.rightDrive = new TalonGroup(Constants.drive.rightThrottle * Constants.drive.throttle, rightDriveID);
-		this.leftDrive.setInverted(Constants.drive.invertLeft);
-		this.rightDrive.setInverted(Constants.drive.invertRight);
+		this.leftDrive.setInverted(Constants.drive.leftInverted);
+		this.rightDrive.setInverted(Constants.drive.rightInverted);
 	}
 
 	public void drive(double forward, double rotation, double throttle) {
 		this.leftDrive.set((forward + rotation) * throttle);
 		this.rightDrive.set((forward - rotation) * throttle);
-		SmartDashboard.putString(Constants.drive.dashboard, "DRIVE: ARCADE; " + Math.round(throttle * 100) + "%");
+		Dashboard.write(Constants.drive.dashboard, "Drive: ARCADE @ " + Math.round(throttle * 100) + "%");
 	}
 
 	public void drive(double forward, double rotation) {

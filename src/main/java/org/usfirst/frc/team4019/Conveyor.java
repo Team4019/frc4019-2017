@@ -1,41 +1,40 @@
 package org.usfirst.frc.team4019;
 
 import com.ctre.CANTalon;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Conveyor {
-	enum ConveyorMode {INTAKE, OUTTAKE, STOPPED}
+	enum ConveyorMode {FORWARD, REVERSE, DISABLED}
 
 	CANTalon motor;
 	ConveyorMode conveyorMode;
 
 	public Conveyor(int talonID) {
 		this.motor = new CANTalon(talonID);
-		this.motor.setInverted(Constants.conveyor.invertConveyor);
-		this.conveyorMode = ConveyorMode.STOPPED;
+		this.motor.setInverted(Constants.conveyor.inverted);
+		this.conveyorMode = ConveyorMode.DISABLED;
 	}
 
 	public void start() {
 		this.motor.set(Constants.conveyor.speed);
-		this.conveyorMode = ConveyorMode.INTAKE;
+		this.conveyorMode = ConveyorMode.FORWARD;
 		this.setDashboard();
 	}
 
 	public void reverse() {
 		this.motor.set(-Constants.conveyor.speed);
-		this.conveyorMode = ConveyorMode.OUTTAKE;
+		this.conveyorMode = ConveyorMode.REVERSE;
 		this.setDashboard();
 	}
 
 	public void stop() {
-		if (this.conveyorMode != ConveyorMode.STOPPED) {
+		if (this.conveyorMode != ConveyorMode.DISABLED) {
 			this.motor.set(0);
-			this.conveyorMode = ConveyorMode.STOPPED;
+			this.conveyorMode = ConveyorMode.DISABLED;
 			this.setDashboard();
 		}
 	}
 
 	public void setDashboard() {
-		SmartDashboard.putString(Constants.conveyor.dashboard, "CONVEYOR: " + this.conveyorMode + ";");
+		Dashboard.write(Constants.conveyor.dashboard, "Conveyor: " + this.conveyorMode + ";");
 	}
 }

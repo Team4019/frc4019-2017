@@ -1,7 +1,6 @@
 package org.usfirst.frc.team4019;
 
 import com.ctre.CANTalon;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Climb {
 	CANTalon leftMotor;
@@ -25,6 +24,6 @@ public class Climb {
 	}
 
 	public void setDashboard(boolean enabled, double axis) {
-		SmartDashboard.putString(Constants.climb.dashboard, "CLIMB: " + enabled + "; " + Math.round(axis * 100) + "%");
+		Dashboard.write(Constants.climb.dashboard, "Climb: " + enabled + " @ " + Math.round(axis * 100) + "%");
 	}
 }

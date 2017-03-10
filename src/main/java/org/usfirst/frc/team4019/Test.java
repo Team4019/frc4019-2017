@@ -9,14 +9,14 @@ public abstract class Test {
 	}
 
 	public static int periodic() {
-		/*if (Robot.leftStick.getRawButton(1)) {
-			Robot.spark1.set(Robot.leftStick.joystick.getThrottle());
+		/*if (Robot.leftID.getRawButton(1)) {
+			Robot.spark1.set(Robot.leftID.joystick.getThrottle());
 		} else {
 			Robot.spark1.set(0);
 		}
 
-		if (Robot.rightStick.getRawButton(1)) {
-			Robot.spark2.set(Robot.rightStick.joystick.getThrottle());
+		if (Robot.rightID.getRawButton(1)) {
+			Robot.spark2.set(Robot.rightID.joystick.getThrottle());
 		} else {
 			Robot.spark2.set(0);
 		}*/

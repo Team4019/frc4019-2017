@@ -5,15 +5,15 @@ import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 
 public class Robot extends IterativeRobot {
-	static Joystick leftStick = new Joystick(Constants.sticks.leftStick);
-	static Joystick rightStick = new Joystick(Constants.sticks.rightStick);
-	static Drivetrain drivetrain = new Drivetrain(Constants.drive.leftDriveID, Constants.drive.rightDriveID);
-	static Scavenger scavenger = new Scavenger(Constants.scavenger.scavengerID);
-	static Conveyor conveyor = new Conveyor(Constants.conveyor.conveyorID);
-	static Shooter shooter = new Shooter(Constants.shooter.leftWheelID, Constants.shooter.rightWheelID);
+	static Joystick leftStick = new Joystick(Constants.sticks.leftID);
+	static Joystick rightStick = new Joystick(Constants.sticks.rightID);
+	static Drivetrain drivetrain = new Drivetrain(Constants.drive.leftID, Constants.drive.rightID);
+	static Intake intake = new Intake(Constants.intake.ID);
+	static Conveyor conveyor = new Conveyor(Constants.conveyor.ID);
+	static Shooter shooter = new Shooter(Constants.shooter.leftID, Constants.shooter.rightID);
 	static Climb climb = new Climb(Constants.climb.leftClimbID, Constants.climb.rightClimbID);
-	//static Ultrasonic ultrasonic = new Ultrasonic(Constants.ultrasonic.leftUltrasonicPort, Constants.ultrasonic.rightUltrasonicPort);
-	static Relay test = new Relay(0);
+	//static Ultrasonic ultrasonic = new Ultrasonic(Constants.ultrasonic.leftID, Constants.ultrasonic.rightID);
+	static Relay lights = new Relay(0);
 	static CvSink video;
 	static CvSource stream;
 
@@ -43,37 +43,8 @@ public class Robot extends IterativeRobot {
 	}
 
 	@Override
-	public void robotPeriodic() {
-		Main.periodic();
-	}
-
-	@Override
-	public void disabledInit() {
-		Main.disable();
-	}
-
-	@Override
-	public void disabledPeriodic() {
-		Main.idle();
-		Timer.delay(0.001);
-	}
-
-	@Override
 	public void autonomousInit() {
-		Dashboard.clear();
 		Autonomous.init();
-	}
-
-	@Override
-	public void teleopInit() {
-		Dashboard.clear();
-		Teleoperated.init();
-	}
-
-	@Override
-	public void testInit() {
-		Dashboard.clear();
-		Test.init();
 	}
 
 	@Override
@@ -83,9 +54,19 @@ public class Robot extends IterativeRobot {
 	}
 
 	@Override
+	public void teleopInit() {
+		Teleoperated.init();
+	}
+
+	@Override
 	public void teleopPeriodic() {
 		Teleoperated.periodic();
 		Timer.delay(0.001);
+	}
+
+	@Override
+	public void testInit() {
+		Test.init();
 	}
 
 	@Override
