@@ -7,11 +7,11 @@ import edu.wpi.cscore.CvSource;
 public class Robot extends IterativeRobot {
 	static Joystick leftStick = new Joystick(Constants.sticks.leftID);
 	static Joystick rightStick = new Joystick(Constants.sticks.rightID);
-	static Drivetrain drivetrain = new Drivetrain(Constants.drive.leftID, Constants.drive.rightID);
+	static Drive drive = new Drive(Constants.drive.leftID, Constants.drive.rightID);
 	static Intake intake = new Intake(Constants.intake.ID);
 	static Conveyor conveyor = new Conveyor(Constants.conveyor.ID);
 	static Shooter shooter = new Shooter(Constants.shooter.leftID, Constants.shooter.rightID);
-	static Climb climb = new Climb(Constants.climb.leftClimbID, Constants.climb.rightClimbID);
+	static Climber climber = new Climber(Constants.climber.leftID, Constants.climber.rightID);
 	//static Ultrasonic ultrasonic = new Ultrasonic(Constants.ultrasonic.leftID, Constants.ultrasonic.rightID);
 	static Relay lights = new Relay(0);
 	static CvSink video;
@@ -20,7 +20,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		CameraServer.getInstance().startAutomaticCapture().setResolution(Constants.camera.size[0], Constants.camera.size[1]);
-		video = CameraServer.getInstance().getVideo(Constants.camera.cameraID);
+		video = CameraServer.getInstance().getVideo(Constants.camera.ID);
 		stream = CameraServer.getInstance().putVideo("Robot Vision", Constants.camera.size[0], Constants.camera.size[1]);
 		Main.init();
 	}

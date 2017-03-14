@@ -48,15 +48,17 @@ public abstract class Constants {
 		static final int throttleAxis = 6;
 		static final double speed = 1;
 		static final double angle = 60; // degrees
+		static final double height = 0; // inches
+		static final double inset = 0; // inches
 		static final int dashboard = 3;
 	}
 
 	// Settings related to the Climbing mechanism
-	static abstract class climb {
-		static final int leftClimbID = 3;
-		static final int rightClimbID = 9;
-		static final boolean invertLeftClimb = true;
-		static final boolean invertRightClimb = false;
+	static abstract class climber {
+		static final int leftID = 3;
+		static final int rightID = 9;
+		static final boolean leftInverted = true;
+		static final boolean rightInverted = false;
 		static final int safetyButton = 2;
 		static final double speed = 0.4;
 		static final int dashboard = 4;
@@ -70,7 +72,6 @@ public abstract class Constants {
 	}
 
 	// Settings related to the Assist (alignment) system
-
 	static abstract class assist {
 		static final int angleButton = 1;
 		static final int distanceButton = 2;
@@ -78,14 +79,19 @@ public abstract class Constants {
 
 	// Information relating to the camera
 	static abstract class camera {
-		static final String cameraID = "USB Camera 0";
+		static final String ID = "USB Camera 0";
 		static final int[] size = {640, 480};
 		static final double fov = 50; // degrees
 	}
 
-	// Information relating to the game field
-	static abstract class field {
-		static final double boilerWidth = 15; // inches
+	// Information relating to the game field Boiler
+	static abstract class boiler {
+		static final double height = 97; // inches
+		static final double width = 15; // inches
+	}
+
+	static abstract class physics {
+		static final double gravity = 386.09; // inches per second squared
 	}
 
 	static abstract class autonomous {

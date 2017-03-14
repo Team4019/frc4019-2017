@@ -6,35 +6,35 @@ public class Intake {
 	enum IntakeMode {FORWARD, REVERSE, DISABLED}
 
     CANTalon motor;
-    IntakeMode intakeMode;
+    IntakeMode mode;
 
-    public Intake(int talonID) {
-        this.motor = new CANTalon(talonID);
+    public Intake(int ID) {
+        this.motor = new CANTalon(ID);
         this.motor.setInverted(Constants.intake.inverted);
-        this.intakeMode = IntakeMode.DISABLED;
+        this.mode = IntakeMode.DISABLED;
     }
 
     public void start() {
         this.motor.set(Constants.intake.speed);
-        this.intakeMode = IntakeMode.FORWARD;
+        this.mode = IntakeMode.FORWARD;
         this.setDashboard();
     }
 
     public void reverse() {
         this.motor.set(-Constants.intake.speed);
-	    this.intakeMode = IntakeMode.REVERSE;
+	    this.mode = IntakeMode.REVERSE;
 	    this.setDashboard();
     }
 
     public void stop() {
-        if (this.intakeMode != IntakeMode.DISABLED) {
+        if (this.mode != IntakeMode.DISABLED) {
             this.motor.set(0);
-	        this.intakeMode = IntakeMode.DISABLED;
+	        this.mode = IntakeMode.DISABLED;
 	        this.setDashboard();
         }
     }
 
     public void setDashboard() {
-	    Dashboard.write(Constants.intake.dashboard, "Intake: " + this.intakeMode + ";");
+	    Dashboard.write(Constants.intake.dashboard, "Intake: " + this.mode);
     }
 }

@@ -3,37 +3,37 @@ package org.usfirst.frc.team4019;
 import com.ctre.CANTalon;
 
 public class Shooter {
-	enum ShootingMode {ENABLED, DISABLED}
+	enum ShooterMode {ENABLED, DISABLED}
 
-	CANTalon leftWheel;
-	CANTalon rightWheel;
-	ShootingMode shooting;
+	CANTalon leftMotor;
+	CANTalon rightMotor;
+	ShooterMode mode;
 
-	public Shooter(int leftTalonID, int rightTalonID) {
-		this.leftWheel = new CANTalon(leftTalonID);
-		this.rightWheel = new CANTalon(rightTalonID);
-		this.leftWheel.setInverted(Constants.shooter.leftInverted);
-		this.rightWheel.setInverted(Constants.shooter.rightInverted);
-		this.shooting = ShootingMode.DISABLED;
+	public Shooter(int leftID, int rightID) {
+		this.leftMotor = new CANTalon(leftID);
+		this.rightMotor = new CANTalon(rightID);
+		this.leftMotor.setInverted(Constants.shooter.leftInverted);
+		this.rightMotor.setInverted(Constants.shooter.rightInverted);
+		this.mode = ShooterMode.DISABLED;
 	}
 
 	public void set(double value) {
-		this.leftWheel.set(value * Constants.shooter.speed);
-		this.rightWheel.set(value * Constants.shooter.speed);
-		this.shooting = ShootingMode.ENABLED;
+		this.leftMotor.set(value * Constants.shooter.speed);
+		this.rightMotor.set(value * Constants.shooter.speed);
+		this.mode = ShooterMode.ENABLED;
 		this.setDashboard(value);
 	}
 
 	public void stop(double value) {
-		if (this.shooting != ShootingMode.DISABLED) {
-			this.leftWheel.set(0);
-			this.rightWheel.set(0);
-			this.shooting = ShootingMode.DISABLED;
+		if (this.mode != ShooterMode.DISABLED) {
+			this.leftMotor.set(0);
+			this.rightMotor.set(0);
+			this.mode = ShooterMode.DISABLED;
 		}
 		this.setDashboard(value);
 	}
 
 	public void setDashboard(double value) {
-		Dashboard.write(Constants.shooter.dashboard, "Shooter: " + this.shooting + " @ " + Math.round(value * 100) + "%");
+		Dashboard.write(Constants.shooter.dashboard, "Shooter: " + this.mode + " @ " + Math.round(value * 100) + "%");
 	}
 }

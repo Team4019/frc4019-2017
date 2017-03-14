@@ -6,35 +6,35 @@ public class Conveyor {
 	enum ConveyorMode {FORWARD, REVERSE, DISABLED}
 
 	CANTalon motor;
-	ConveyorMode conveyorMode;
+	ConveyorMode mode;
 
-	public Conveyor(int talonID) {
-		this.motor = new CANTalon(talonID);
+	public Conveyor(int ID) {
+		this.motor = new CANTalon(ID);
 		this.motor.setInverted(Constants.conveyor.inverted);
-		this.conveyorMode = ConveyorMode.DISABLED;
+		this.mode = ConveyorMode.DISABLED;
 	}
 
 	public void start() {
 		this.motor.set(Constants.conveyor.speed);
-		this.conveyorMode = ConveyorMode.FORWARD;
+		this.mode = ConveyorMode.FORWARD;
 		this.setDashboard();
 	}
 
 	public void reverse() {
 		this.motor.set(-Constants.conveyor.speed);
-		this.conveyorMode = ConveyorMode.REVERSE;
+		this.mode = ConveyorMode.REVERSE;
 		this.setDashboard();
 	}
 
 	public void stop() {
-		if (this.conveyorMode != ConveyorMode.DISABLED) {
+		if (this.mode != ConveyorMode.DISABLED) {
 			this.motor.set(0);
-			this.conveyorMode = ConveyorMode.DISABLED;
+			this.mode = ConveyorMode.DISABLED;
 			this.setDashboard();
 		}
 	}
 
 	public void setDashboard() {
-		Dashboard.write(Constants.conveyor.dashboard, "Conveyor: " + this.conveyorMode + ";");
+		Dashboard.write(Constants.conveyor.dashboard, "Conveyor: " + this.mode);
 	}
 }

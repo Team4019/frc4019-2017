@@ -1,7 +1,6 @@
 package org.usfirst.frc.team4019;
 
 import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public abstract class Teleoperated {
 	public static int init() {
@@ -11,7 +10,7 @@ public abstract class Teleoperated {
 	public static int periodic() {
 		// Drive and align
 		if (!(Robot.rightStick.getRawButton(Constants.assist.distanceButton) || Robot.rightStick.getRawButton(Constants.assist.angleButton))) {
-			Robot.drivetrain.drive(-Robot.rightStick.getY(), Robot.rightStick.getX(), (Robot.rightStick.getThrottle() - 1) / -2);
+			Robot.drive.drive(-Robot.rightStick.getY(), Robot.rightStick.getX(), (Robot.rightStick.getThrottle() - 1) / -2);
 		} else {
 			Assist.assist(Robot.rightStick.getRawButton(Constants.assist.distanceButton), Robot.rightStick.getRawButton(Constants.assist.angleButton));
 		}
@@ -39,12 +38,12 @@ public abstract class Teleoperated {
 		}
 
 		// Climbing mechanism
-		if (Robot.leftStick.getRawButton(Constants.climb.safetyButton)) {
-			Robot.climb.set(Robot.leftStick.getY());
+		if (Robot.leftStick.getRawButton(Constants.climber.safetyButton)) {
+			Robot.climber.set(Robot.leftStick.getY());
 		} else {
-			Robot.climb.stop();
+			Robot.climber.stop();
 		}
-		Robot.climb.setDashboard(Robot.leftStick.getRawButton(Constants.climb.safetyButton), -Robot.leftStick.getY());
+		Robot.climber.setDashboard(Robot.leftStick.getRawButton(Constants.climber.safetyButton), -Robot.leftStick.getY());
 
 		// LED lights
 		Robot.lights.set(Dashboard.getButton(0) ? Relay.Value.kOn : Relay.Value.kOff);

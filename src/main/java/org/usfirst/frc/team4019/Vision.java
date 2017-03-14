@@ -96,7 +96,7 @@ public abstract class Vision {
 			if (max != null) break;
 		}
 		if (min != null && max != null) {
-			boilerDistance = new Distance(Constants.field.boilerWidth / 2 / Math.tan(Math.toRadians(Constants.camera.fov) * (max - min + 1) / Constants.camera.size[0] / 2));
+			boilerDistance = new Distance(Constants.boiler.width / 2 / Math.tan(Math.toRadians(Constants.camera.fov) * (max - min + 1) / Constants.camera.size[0] / 2));
 		} else {
 			boilerDistance = new Distance(null);
 		}*/
@@ -108,7 +108,7 @@ public abstract class Vision {
 				if (minimum == null || (minimum != null && vertex.x < minimum)) minimum = (int) vertex.x;
 				if (maximum == null || (minimum != null && vertex.x > maximum)) maximum = (int) vertex.x;
 			}
-			boilerDistance = Constants.field.boilerWidth / 2 / Math.tan(Math.toRadians(Constants.camera.fov) * (maximum - minimum + 1) / Constants.camera.size[0] / 2);
+			boilerDistance = Constants.boiler.width / 2 / Math.tan(Math.toRadians(Constants.camera.fov) * (maximum - minimum + 1) / Constants.camera.size[0] / 2);
 			boilerAngle = Constants.camera.fov * (0.5 - (double) (maximum + minimum) / 2 / Constants.camera.size[0]);
 		} else {
 			boilerDistance = null;
