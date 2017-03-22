@@ -9,41 +9,38 @@ public abstract class Teleoperated {
 
 	public static int periodic() {
 		// Drive and align
-		if (!(Robot.rightStick.getRawButton(Constants.assist.distanceButton) || Robot.rightStick.getRawButton(Constants.assist.angleButton))) {
-			Robot.drive.drive(-Robot.rightStick.getY(), Robot.rightStick.getX(), (Robot.rightStick.getThrottle() - 1) / -2);
-		} else {
-			Assist.assist(Robot.rightStick.getRawButton(Constants.assist.distanceButton), Robot.rightStick.getRawButton(Constants.assist.angleButton));
+		if (!Assist.assist(Robot.rightStick.button(Constants.assist.distanceButton), Robot.rightStick.button(Constants.assist.angleButton))) {
+			Robot.drive.drive(Robot.rightStick.vertical(), Robot.rightStick.horizontal(), Robot.rightStick.throttle());
 		}
 
 		// Ball intake
-		if (Robot.leftStick.getRawButton(Constants.intake.forwardButton)) {
+		if (Robot.leftStick.button(Constants.intake.forwardButton)) {
 			Robot.intake.start();
-		} else if (Robot.leftStick.getRawButton(Constants.intake.reverseButton)) {
+		} else if (Robot.leftStick.button(Constants.intake.reverseButton)) {
 			Robot.intake.reverse();
 		} else {
 			Robot.intake.stop();
 		}
 
 		// Conveyor and shooter
-		if (Robot.leftStick.getRawButton(Constants.shooter.safetyButton)) {
-			Robot.shooter.set((Robot.leftStick.getThrottle() - 1) / -2);
-			if (!Robot.leftStick.getRawButton(Constants.conveyor.invertButton)) {
+		if (Robot.leftStick.button(Constants.shooter.safetyButton)) {
+			Robot.shooter.set(Robot.leftStick.throttle());
+			if (!Robot.leftStick.button(Constants.conveyor.invertButton)) {
 				Robot.conveyor.start();
 			} else {
 				Robot.conveyor.reverse();
 			}
 		} else {
-			Robot.shooter.stop((Robot.leftStick.getThrottle() - 1) / -2);
+			Robot.shooter.stop();
 			Robot.conveyor.stop();
 		}
 
 		// Climbing mechanism
-		if (Robot.leftStick.getRawButton(Constants.climber.safetyButton)) {
-			Robot.climber.set(Robot.leftStick.getY());
+		if (Robot.leftStick.button(Constants.climber.safetyButton)) {
+			Robot.climber.set(Robot.leftStick.vertical());
 		} else {
 			Robot.climber.stop();
 		}
-		Robot.climber.setDashboard(Robot.leftStick.getRawButton(Constants.climber.safetyButton), -Robot.leftStick.getY());
 
 		// LED lights
 		Robot.lights.set(Dashboard.getButton(0) ? Relay.Value.kOn : Relay.Value.kOff);

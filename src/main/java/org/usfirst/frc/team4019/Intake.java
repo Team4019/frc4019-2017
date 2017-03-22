@@ -27,11 +27,9 @@ public class Intake {
     }
 
     public void stop() {
-        if (this.mode != IntakeMode.DISABLED) {
-            this.motor.set(0);
-	        this.mode = IntakeMode.DISABLED;
-	        this.setDashboard();
-        }
+        this.motor.set(0);
+        this.mode = IntakeMode.DISABLED;
+        this.setDashboard();
     }
 
     public void setDashboard() {

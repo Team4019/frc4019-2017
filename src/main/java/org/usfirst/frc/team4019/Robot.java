@@ -5,8 +5,8 @@ import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 
 public class Robot extends IterativeRobot {
-	static Joystick leftStick = new Joystick(Constants.sticks.leftID);
-	static Joystick rightStick = new Joystick(Constants.sticks.rightID);
+	static Stick leftStick = new Stick(Constants.sticks.leftID);
+	static Stick rightStick = new Stick(Constants.sticks.rightID);
 	static Drive drive = new Drive(Constants.drive.leftID, Constants.drive.rightID);
 	static Intake intake = new Intake(Constants.intake.ID);
 	static Conveyor conveyor = new Conveyor(Constants.conveyor.ID);

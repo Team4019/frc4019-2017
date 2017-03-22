@@ -48,6 +48,7 @@ public abstract class Constants {
 		static final int throttleAxis = 6;
 		static final double speed = 1;
 		static final double angle = 60; // degrees
+		static final double radius = 0; // inches
 		static final double height = 0; // inches
 		static final double inset = 0; // inches
 		static final int dashboard = 3;
@@ -57,8 +58,8 @@ public abstract class Constants {
 	static abstract class climber {
 		static final int leftID = 3;
 		static final int rightID = 9;
-		static final boolean leftInverted = true;
-		static final boolean rightInverted = false;
+		static final boolean leftInverted = false;
+		static final boolean rightInverted = true;
 		static final int safetyButton = 2;
 		static final double speed = 0.4;
 		static final int dashboard = 4;

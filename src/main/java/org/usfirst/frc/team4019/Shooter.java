@@ -24,13 +24,11 @@ public class Shooter {
 		this.setDashboard(value);
 	}
 
-	public void stop(double value) {
-		if (this.mode != ShooterMode.DISABLED) {
-			this.leftMotor.set(0);
-			this.rightMotor.set(0);
-			this.mode = ShooterMode.DISABLED;
-		}
-		this.setDashboard(value);
+	public void stop() {
+		this.leftMotor.set(0);
+		this.rightMotor.set(0);
+		this.mode = ShooterMode.DISABLED;
+		this.setDashboard(0);
 	}
 
 	public void setDashboard(double value) {
