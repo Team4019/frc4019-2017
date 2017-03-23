@@ -30,7 +30,7 @@ public class Drive {
 		}
 	}
 
-	enum DriveMode {ARCADE}
+	enum DriveMode {ARCADE, HYBRID, TWIST, TRIPLE}
 
 	CANTalonGroup leftDrive;
 	CANTalonGroup rightDrive;
@@ -41,16 +41,33 @@ public class Drive {
 		this.rightDrive = new CANTalonGroup(Constants.drive.rightThrottle * Constants.drive.throttle, rightID);
 		this.leftDrive.setInverted(Constants.drive.leftInverted);
 		this.rightDrive.setInverted(Constants.drive.rightInverted);
-		this.mode = DriveMode.ARCADE;
+		this.mode = Constants.drive.defaultMode;
 	}
 
-	public void drive(double forward, double rotation, double throttle) {
+	public void drive() {
+		switch (this.mode) {
+			case ARCADE:
+				this.set(Robot.rightStick.vertical(), Robot.rightStick.horizontal(), Robot.rightStick.throttle());
+				break;
+			case HYBRID:
+				this.set(Robot.rightStick.vertical(), Robot.rightStick.trigger() ? Robot.rightStick.rotation() : Robot.rightStick.horizontal(), Robot.rightStick.throttle());
+				break;
+			case TWIST:
+				this.set(Robot.rightStick.vertical(), Robot.rightStick.rotation(), Robot.rightStick.throttle());
+				break;
+			case TRIPLE:
+				this.set(0, 0, 0);
+				break;
+		}
+	}
+
+	public void set(double forward, double rotation, double throttle) {
 		this.leftDrive.set((forward + rotation) * throttle);
 		this.rightDrive.set((forward - rotation) * throttle);
 		Dashboard.write(Constants.drive.dashboard, "Drive: " + this.mode + " @ " + Math.round(throttle * 100) + "%");
 	}
 
-	public void drive(double forward, double rotation) {
-		this.drive(forward, rotation, 1);
+	public void set(double forward, double rotation) {
+		this.set(forward, rotation, 1);
 	}
 }

@@ -24,6 +24,9 @@ public class Stick extends Joystick {
 	public double throttle() {
 		return this.getThrottle() / -2 + 0.5;
 	}
+	public boolean trigger() {
+		return this.getTrigger();
+	}
 	public boolean button(int value) {
 		return this.getRawButton(value);
 	}

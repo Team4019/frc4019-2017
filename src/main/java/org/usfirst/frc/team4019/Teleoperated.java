@@ -9,13 +9,22 @@ public abstract class Teleoperated {
 
 	public static int periodic() {
 		// Drive and align
+		if (Robot.rightStick.button(Constants.drive.arcadeButton)) {
+			Robot.drive.mode = Drive.DriveMode.ARCADE;
+		} else if (Robot.rightStick.button(Constants.drive.hybridButton)) {
+			Robot.drive.mode = Drive.DriveMode.HYBRID;
+		} else if (Robot.rightStick.button(Constants.drive.twistButton)) {
+			Robot.drive.mode = Drive.DriveMode.TWIST;
+		} else if (Robot.rightStick.button(Constants.drive.tripleButton)) {
+			Robot.drive.mode = Drive.DriveMode.TRIPLE;
+		}
 		if (!Assist.assist(Robot.rightStick.button(Constants.assist.distanceButton), Robot.rightStick.button(Constants.assist.angleButton))) {
-			Robot.drive.drive(Robot.rightStick.vertical(), Robot.rightStick.horizontal(), Robot.rightStick.throttle());
+			Robot.drive.drive();
 		}
 
 		// Ball intake
 		if (Robot.leftStick.button(Constants.intake.forwardButton)) {
-			Robot.intake.start();
+			Robot.intake.forward();
 		} else if (Robot.leftStick.button(Constants.intake.reverseButton)) {
 			Robot.intake.reverse();
 		} else {

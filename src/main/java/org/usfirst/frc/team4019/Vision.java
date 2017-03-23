@@ -46,6 +46,7 @@ public abstract class Vision {
 	static MatOfPoint boundary = null;
 	static Integer minimum = null;
 	static Integer maximum = null;
+	static Double boilerRawDistance = null;
 	static Double boilerDistance = null;
 	static Double boilerAngle = null;
 	static Double liftDistance = null;
@@ -72,7 +73,7 @@ public abstract class Vision {
 
 	public static void trackBoiler() {
 		// Unused code, use if processing standard images rather than contours.
-		// Pixels start in the top left corner of the viewport.
+		// Pixels forward in the top left corner of the viewport.
 		// 255 for on, 0 for off.
 
 		/*Integer min = null;
@@ -96,9 +97,9 @@ public abstract class Vision {
 			if (max != null) break;
 		}
 		if (min != null && max != null) {
-			boilerDistance = new Distance(Constants.boiler.width / 2 / Math.tan(Math.toRadians(Constants.camera.fov) * (max - min + 1) / Constants.camera.size[0] / 2));
+			boilerRawDistance = new Distance(Constants.boiler.width / 2 / Math.tan(Math.toRadians(Constants.camera.fov) * (max - min + 1) / Constants.camera.size[0] / 2));
 		} else {
-			boilerDistance = new Distance(null);
+			boilerRawDistance = new Distance(null);
 		}*/
 
 		if (boundary != null && boundary.toArray().length > 0) {
@@ -108,15 +109,17 @@ public abstract class Vision {
 				if (minimum == null || (minimum != null && vertex.x < minimum)) minimum = (int) vertex.x;
 				if (maximum == null || (minimum != null && vertex.x > maximum)) maximum = (int) vertex.x;
 			}
-			boilerDistance = Constants.boiler.width / 2 / Math.tan(Math.toRadians(Constants.camera.fov) * (maximum - minimum + 1) / Constants.camera.size[0] / 2);
+			boilerRawDistance = Constants.boiler.width / 2 / Math.tan(Math.toRadians(Constants.camera.fov) * (maximum - minimum + 1) / Constants.camera.size[0] / 2);
+			boilerDistance = Math.sqrt(Math.max(Math.pow(boilerRawDistance, 2) - Math.pow(Constants.boiler.height, 2), 0)) - Constants.camera.inset;
 			boilerAngle = Constants.camera.fov * (0.5 - (double) (maximum + minimum) / 2 / Constants.camera.size[0]);
 		} else {
+			boilerRawDistance = null;
 			boilerDistance = null;
 			boilerAngle = null;
 		}
 
-		Dashboard.write(5, (int) Math.round(boilerDistance) / 12 + "' " + (int) Math.round(boilerDistance) % 12 + "\"");
-		Dashboard.write(6, (int) Math.round(boilerAngle) + " deg");
+		Dashboard.write(Constants.vision.distanceDashboard, (int) Math.round(boilerDistance) / 12 + "' " + (int) Math.round(boilerDistance) % 12 + "\"");
+		Dashboard.write(Constants.vision.angleDashboard, (int) Math.round(boilerAngle) + " deg");
 	}
 
 	public static void trackLift() {

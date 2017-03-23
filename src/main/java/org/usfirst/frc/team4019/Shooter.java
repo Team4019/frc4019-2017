@@ -3,7 +3,7 @@ package org.usfirst.frc.team4019;
 import com.ctre.CANTalon;
 
 public class Shooter {
-	enum ShooterMode {ENABLED, DISABLED}
+	enum ShooterMode {CONSTANT, DYNAMIC, MANUAL, DISABLED}
 
 	CANTalon leftMotor;
 	CANTalon rightMotor;
@@ -17,10 +17,25 @@ public class Shooter {
 		this.mode = ShooterMode.DISABLED;
 	}
 
+	public void constant() {
+		this.leftMotor.set(Constants.shooter.constantSpeed);
+		this.rightMotor.set(Constants.shooter.constantSpeed);
+		this.mode = ShooterMode.CONSTANT;
+		this.setDashboard(1);
+	}
+
+	public void dynamic() {
+		double value = Physics.angular(Vision.boilerDistance) * Constants.shooter.coefficient;
+		this.leftMotor.set(value);
+		this.rightMotor.set(value);
+		this.mode = ShooterMode.DYNAMIC;
+		this.setDashboard(value);
+	}
+
 	public void set(double value) {
-		this.leftMotor.set(value * Constants.shooter.speed);
-		this.rightMotor.set(value * Constants.shooter.speed);
-		this.mode = ShooterMode.ENABLED;
+		this.leftMotor.set(value * Constants.shooter.manualSpeed);
+		this.rightMotor.set(value * Constants.shooter.manualSpeed);
+		this.mode = ShooterMode.MANUAL;
 		this.setDashboard(value);
 	}
 

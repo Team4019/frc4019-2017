@@ -14,7 +14,7 @@ public class Intake {
         this.mode = IntakeMode.DISABLED;
     }
 
-    public void start() {
+    public void forward() {
         this.motor.set(Constants.intake.speed);
         this.mode = IntakeMode.FORWARD;
         this.setDashboard();
