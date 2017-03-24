@@ -32,13 +32,18 @@ public abstract class Teleoperated {
 		}
 
 		// Conveyor and shooter
-		if (Robot.leftStick.button(Constants.shooter.safetyButton)) {
-			Robot.shooter.set(Robot.leftStick.throttle());
-			if (!Robot.leftStick.button(Constants.conveyor.invertButton)) {
-				Robot.conveyor.start();
-			} else {
-				Robot.conveyor.reverse();
+		if (Robot.leftStick.anyButton(Constants.shooter.constantButton, Constants.shooter.dynamicButton, Constants.shooter.manualButton)) {
+			if (Robot.leftStick.button(Constants.shooter.constantButton)) {
+				Robot.shooter.constant();
+			} else if (Robot.leftStick.button(Constants.shooter.dynamicButton)) {
+				Robot.shooter.dynamic();
+			} else if (Robot.leftStick.button(Constants.shooter.manualButton)) {
+				Robot.shooter.set(Robot.leftStick.throttle());
 			}
+			Robot.conveyor.start();
+		} else if (Robot.leftStick.button(Constants.conveyor.reverseButton)) {
+			Robot.shooter.stop();
+			Robot.conveyor.reverse();
 		} else {
 			Robot.shooter.stop();
 			Robot.conveyor.stop();

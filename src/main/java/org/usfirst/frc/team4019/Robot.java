@@ -10,7 +10,7 @@ public class Robot extends IterativeRobot {
 	static Drive drive = new Drive(Constants.drive.leftID, Constants.drive.rightID);
 	static Intake intake = new Intake(Constants.intake.ID);
 	static Conveyor conveyor = new Conveyor(Constants.conveyor.ID);
-	static Shooter shooter = new Shooter(Constants.shooter.leftID, Constants.shooter.rightID);
+	static Shooter shooter = new Shooter(Constants.shooter.ID);
 	static Climber climber = new Climber(Constants.climber.leftID, Constants.climber.rightID);
 	//static Ultrasonic ultrasonic = new Ultrasonic(Constants.ultrasonic.leftID, Constants.ultrasonic.rightID);
 	static Relay lights = new Relay(0);

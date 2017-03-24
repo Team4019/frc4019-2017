@@ -38,24 +38,24 @@ public abstract class Constants {
 	static abstract class conveyor {
 		static final int ID = 2;
 		static final boolean inverted = true;
-		static final int invertButton = 4;
+		static final int reverseButton = 4;
 		static final double speed = 0.6;
 		static final int dashboard = 2;
 	}
 
 	// Settings related to the Shooting mechanism
 	static abstract class shooter {
-		static final int leftID = 1;
-		static final int rightID = 7;
-		static final boolean leftInverted = true;
-		static final boolean rightInverted = false;
-		static final int safetyButton = 1;
+		static final int ID = 7;
+		static final boolean inverted = false; // ???
+		static final int constantButton = 1;
+		static final int dynamicButton = -1;
+		static final int manualButton = -1;
 		static final int throttleAxis = 6;
 		static final double angle = 60; // degrees
-		static final double radius = 0; // inches
-		static final double height = 0; // inches
-		static final double inset = 0; // inches
-		static final double constantSpeed = 0;
+		static final double radius = 2.125; // inches
+		static final double height = 19; // inches
+		static final double inset = 32; // inches
+		static final double constantSpeed = 0.56;
 		static final double manualSpeed = 1;
 		static final double coefficient = 0; // revolutions per second -> power
 		static final int dashboard = 3;
@@ -77,14 +77,16 @@ public abstract class Constants {
 		static final String ID = "USB Camera 0";
 		static final int[] size = {640, 480};
 		static final double fov = 50; // degrees
-		static final double inset = 0; // inches
+		static final double height = 22; // inches
+		static final double inset = 9; // inches
 	}
 
 	// Settings related to the Ultrasonic mechanism
 	static abstract class ultrasonic {
 		static final int leftID = 8;
 		static final int rightID = 9;
-		static final double spread = 1;
+		static final double inset = 0; // inches
+		static final double spread = 0; // inches
 	}
 
 	static abstract class vision {
@@ -109,7 +111,15 @@ public abstract class Constants {
 	}
 
 	static abstract class autonomous {
-		static final double forwardSpeed = 0;
+		static final int polarity = 1;
 		static final double forwardTime = 0;
+		static final double forwardSpeed = 0;
+		static final double rotationTime = 0;
+		static final double rotationSpeed = 0;
+		static final double lateralTime = 0;
+		static final double lateralSpeed = 0;
+		static final double alignTime = 0;
+		static final double alignSpeed = 0;
+		static final double shooterSpeed = 0;
 	}
 }

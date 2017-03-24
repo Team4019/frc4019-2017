@@ -110,7 +110,7 @@ public abstract class Vision {
 				if (maximum == null || (minimum != null && vertex.x > maximum)) maximum = (int) vertex.x;
 			}
 			boilerRawDistance = Constants.boiler.width / 2 / Math.tan(Math.toRadians(Constants.camera.fov) * (maximum - minimum + 1) / Constants.camera.size[0] / 2);
-			boilerDistance = Math.sqrt(Math.max(Math.pow(boilerRawDistance, 2) - Math.pow(Constants.boiler.height, 2), 0)) - Constants.camera.inset;
+			boilerDistance = Math.sqrt(Math.max(Math.pow(boilerRawDistance, 2) - Math.pow(Constants.boiler.height - Constants.camera.height, 2), 0)) - Constants.camera.inset + (Constants.boiler.width / 2);
 			boilerAngle = Constants.camera.fov * (0.5 - (double) (maximum + minimum) / 2 / Constants.camera.size[0]);
 		} else {
 			boilerRawDistance = null;
