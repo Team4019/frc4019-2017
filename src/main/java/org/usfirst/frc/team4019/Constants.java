@@ -5,6 +5,7 @@ public abstract class Constants {
 	static abstract class sticks {
 		static final int leftID = 0;
 		static final int rightID = 1;
+		static final int leftThrottleDashboard = 5;
 	}
 
 	// Settings related to the Drive system
@@ -38,7 +39,9 @@ public abstract class Constants {
 	static abstract class conveyor {
 		static final int ID = 2;
 		static final boolean inverted = true;
+		static final int forwardButton = 6;
 		static final int reverseButton = 4;
+		static final double startupTime = 0.5;
 		static final double speed = 0.6;
 		static final int dashboard = 2;
 	}
@@ -46,17 +49,18 @@ public abstract class Constants {
 	// Settings related to the Shooting mechanism
 	static abstract class shooter {
 		static final int ID = 7;
-		static final boolean inverted = false; // ???
+		static final boolean inverted = true;
 		static final int constantButton = 1;
 		static final int dynamicButton = -1;
-		static final int manualButton = -1;
+		static final int manualButton = 7;
 		static final int throttleAxis = 6;
+		static final double throttleFloor = 0.4;
+		static final double throttleCeiling = 1;
 		static final double angle = 60; // degrees
 		static final double radius = 2.125; // inches
 		static final double height = 19; // inches
 		static final double inset = 32; // inches
-		static final double constantSpeed = 0.56;
-		static final double manualSpeed = 1;
+		static final double constantSpeed = 0.6; // 0.56
 		static final double coefficient = 0; // revolutions per second -> power
 		static final int dashboard = 3;
 	}
@@ -68,7 +72,7 @@ public abstract class Constants {
 		static final boolean leftInverted = false;
 		static final boolean rightInverted = true;
 		static final int safetyButton = 2;
-		static final double speed = 0.4;
+		static final double speed = 1; // 0.4
 		static final int dashboard = 4;
 	}
 
@@ -90,8 +94,8 @@ public abstract class Constants {
 	}
 
 	static abstract class vision {
-		static final int distanceDashboard = 5;
-		static final int angleDashboard = 6;
+		static final int distanceDashboard = 6;
+		static final int angleDashboard = 7;
 	}
 
 	// Settings related to the Assist (alignment) system

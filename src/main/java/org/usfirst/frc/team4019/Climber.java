@@ -21,7 +21,7 @@ public class Climber {
 		this.leftMotor.set(value * Constants.climber.speed);
 		this.rightMotor.set(value * Constants.climber.speed);
 		this.mode = ClimberMode.ENABLED;
-		this.setDashboard(value);
+		this.setDashboard(value * Constants.climber.speed);
 	}
 
 	public void stop() {
@@ -32,6 +32,6 @@ public class Climber {
 	}
 
 	public void setDashboard(double value) {
-		Dashboard.write(Constants.climber.dashboard, "Climber: " + this.mode + " @ " + Math.round(value * 100) + "%");
+		Dashboard.write(Constants.climber.dashboard, "Climber: " + this.mode + " " + Math.round(value * 100) + "%");
 	}
 }

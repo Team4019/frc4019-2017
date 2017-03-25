@@ -18,4 +18,8 @@ public abstract class Range {
     	// Return a number between 0 and 1 indicating a number's position between two endpoints
         return (clamp(value, min, max) - min) / (max - min);
     }
+
+    /*public static double unspread(double value, double min, double max) {
+
+    }*/
 }

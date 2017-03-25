@@ -17,18 +17,18 @@ public class Shooter {
 	public void constant() {
 		this.motor.set(Constants.shooter.constantSpeed);
 		this.mode = ShooterMode.CONSTANT;
-		this.setDashboard(1);
+		this.setDashboard(Constants.shooter.constantSpeed);
 	}
 
 	public void dynamic() {
-		double value = Physics.angular(Vision.boilerDistance) * Constants.shooter.coefficient;
+		double value = Math.min(Physics.angular(Vision.boilerDistance) * Constants.shooter.coefficient, 1);
 		this.motor.set(value);
 		this.mode = ShooterMode.DYNAMIC;
 		this.setDashboard(value);
 	}
 
 	public void set(double value) {
-		this.motor.set(value * Constants.shooter.manualSpeed);
+		this.motor.set(value);
 		this.mode = ShooterMode.MANUAL;
 		this.setDashboard(value);
 	}
@@ -40,6 +40,6 @@ public class Shooter {
 	}
 
 	public void setDashboard(double value) {
-		Dashboard.write(Constants.shooter.dashboard, "Shooter: " + this.mode + " @ " + Math.round(value * 100) + "%");
+		//Dashboard.write(Constants.shooter.dashboard, "Shooter: " + this.mode + " " + Math.round(value * 100) + "%");
 	}
 }

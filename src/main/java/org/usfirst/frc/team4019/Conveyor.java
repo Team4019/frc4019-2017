@@ -14,7 +14,7 @@ public class Conveyor {
 		this.mode = ConveyorMode.DISABLED;
 	}
 
-	public void start() {
+	public void forward() {
 		this.motor.set(Constants.conveyor.speed);
 		this.mode = ConveyorMode.FORWARD;
 		this.setDashboard();

@@ -45,6 +45,10 @@ public abstract class Dashboard {
 		return SmartDashboard.getNumber("DB/Slider " + id);
 	}
 
+	static void setSlider(int id, double value) {
+		SmartDashboard.putNumber("DB/Slider " + id, value);
+	}
+
 	static boolean getButton(int id) {
 		return SmartDashboard.getBoolean("DB/Button " + id);
 	}

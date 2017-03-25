@@ -28,17 +28,17 @@ public class Stick extends Joystick {
 		return this.getTrigger();
 	}
 	public boolean button(int id) {
-		return this.getRawButton(id);
+		return id >= 0 ? this.getRawButton(id) : false;
 	}
 	public boolean anyButton(int... ids) {
 		for (int id : ids) {
-			if (this.getRawButton(id)) return true;
+			if (this.button(id)) return true;
 		}
 		return false;
 	}
 	public boolean allButton(int... ids) {
 		for (int id: ids) {
-			if (!this.getRawButton(id)) return false;
+			if (!this.button(id)) return false;
 		}
 		return true;
 	}

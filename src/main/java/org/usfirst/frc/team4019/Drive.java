@@ -64,7 +64,7 @@ public class Drive {
 	public void set(double forward, double rotation, double throttle) {
 		this.leftDrive.set((forward + rotation) * throttle);
 		this.rightDrive.set((forward - rotation) * throttle);
-		Dashboard.write(Constants.drive.dashboard, "Drive: " + this.mode + " @ " + Math.round(throttle * 100) + "%");
+		Dashboard.write(Constants.drive.dashboard, "Drive: " + this.mode + " " + Math.round(throttle * 100) + "%");
 	}
 
 	public void set(double forward, double rotation) {

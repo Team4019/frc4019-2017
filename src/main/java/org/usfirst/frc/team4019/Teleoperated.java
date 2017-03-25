@@ -3,6 +3,12 @@ package org.usfirst.frc.team4019;
 import edu.wpi.first.wpilibj.Relay;
 
 public abstract class Teleoperated {
+	static Double shooterStart = null;
+
+	static double now() {
+		return System.currentTimeMillis() / 1000.0;
+	}
+
 	public static int init() {
 		return 0;
 	}
@@ -31,23 +37,33 @@ public abstract class Teleoperated {
 			Robot.intake.stop();
 		}
 
-		// Conveyor and shooter
-		if (Robot.leftStick.anyButton(Constants.shooter.constantButton, Constants.shooter.dynamicButton, Constants.shooter.manualButton)) {
-			if (Robot.leftStick.button(Constants.shooter.constantButton)) {
-				Robot.shooter.constant();
-			} else if (Robot.leftStick.button(Constants.shooter.dynamicButton)) {
-				Robot.shooter.dynamic();
-			} else if (Robot.leftStick.button(Constants.shooter.manualButton)) {
-				Robot.shooter.set(Robot.leftStick.throttle());
-			}
-			Robot.conveyor.start();
-		} else if (Robot.leftStick.button(Constants.conveyor.reverseButton)) {
+		// Shooting mechanism
+		if (Robot.leftStick.button(Constants.shooter.constantButton)) {
+			if (shooterStart == null) shooterStart = now();
+			Robot.shooter.constant();
+		} else if (Robot.leftStick.button(Constants.shooter.dynamicButton)) {
+			if (shooterStart == null) shooterStart = now();
+			Robot.shooter.dynamic();
+		} else if (Robot.leftStick.button(Constants.shooter.manualButton)) {
+			if (shooterStart == null) shooterStart = now();
+			Robot.shooter.set(Range.spread(Robot.leftStick.throttle(), Constants.shooter.throttleFloor, Constants.shooter.throttleCeiling));
+		} else {
+			shooterStart = null;
 			Robot.shooter.stop();
+		}
+		Dashboard.write(Constants.shooter.dashboard, "Shooter: " + Robot.shooter.mode + " " + Robot.leftStick.throttle());
+
+		// Shooting mechanism conveyor
+		double temp = now();
+		if ((shooterStart != null && temp > shooterStart + Constants.conveyor.startupTime) || Robot.leftStick.button(Constants.conveyor.forwardButton)) {
+			Robot.conveyor.forward();
+		} else if (Robot.leftStick.button(Constants.conveyor.reverseButton)) {
 			Robot.conveyor.reverse();
 		} else {
-			Robot.shooter.stop();
 			Robot.conveyor.stop();
 		}
+
+		//System.out.println(shooterStart == null ? null : temp - shooterStart);
 
 		// Climbing mechanism
 		if (Robot.leftStick.button(Constants.climber.safetyButton)) {
@@ -55,6 +71,8 @@ public abstract class Teleoperated {
 		} else {
 			Robot.climber.stop();
 		}
+
+		Dashboard.write(Constants.sticks.leftThrottleDashboard, "Left throttle: " + Math.round(Range.spread(Robot.leftStick.throttle(), Constants.shooter.throttleFloor, Constants.shooter.throttleCeiling) * 100) + "%");
 
 		// LED lights
 		Robot.lights.set(Dashboard.getButton(0) ? Relay.Value.kOn : Relay.Value.kOff);

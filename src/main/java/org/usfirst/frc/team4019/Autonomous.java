@@ -9,7 +9,7 @@ public abstract class Autonomous {
 	static int stage;
 
 	static double now() {
-		return System.currentTimeMillis() / 1000;
+		return System.currentTimeMillis() / 1000.0;
 	}
 
 	public static int init() {
@@ -22,7 +22,7 @@ public abstract class Autonomous {
 		delta = now() - initial - time;
 		time += delta;
 
-		if (time < Constants.autonomous.forwardTime) {
+		/*if (time < Constants.autonomous.forwardTime) {
 			Robot.drive.set(Constants.autonomous.forwardSpeed, 0);
 		} else if (time < Constants.autonomous.forwardTime + Constants.autonomous.rotationTime) {
 			Robot.drive.set(0, Constants.autonomous.rotationSpeed * Constants.autonomous.polarity);
@@ -32,7 +32,7 @@ public abstract class Autonomous {
 			Robot.drive.set(0, Constants.autonomous.alignSpeed * Constants.autonomous.polarity);
 		} else {
 			Robot.shooter.set(Constants.autonomous.shooterSpeed);
-		}
+		}*/
 
 		return 0;
 	}
