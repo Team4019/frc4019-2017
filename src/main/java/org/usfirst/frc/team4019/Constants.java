@@ -5,7 +5,6 @@ public abstract class Constants {
 	static abstract class sticks {
 		static final int leftID = 0;
 		static final int rightID = 1;
-		static final int leftThrottleDashboard = 5;
 	}
 
 	// Settings related to the Drive system
@@ -50,17 +49,17 @@ public abstract class Constants {
 	static abstract class shooter {
 		static final int ID = 7;
 		static final boolean inverted = true;
-		static final int constantButton = 1;
+		static final int constantButton = 7;
 		static final int dynamicButton = -1;
-		static final int manualButton = 7;
+		static final int manualButton = 1;
 		static final int throttleAxis = 6;
-		static final double throttleFloor = 0.4;
-		static final double throttleCeiling = 1;
+		static final double throttleFloor = 50;
+		static final double throttleCeiling = 100;
 		static final double angle = 60; // degrees
 		static final double radius = 2.125; // inches
 		static final double height = 19; // inches
 		static final double inset = 32; // inches
-		static final double constantSpeed = 0.6; // 0.56
+		static final double constantSpeed = 0.64; // 0.56
 		static final double coefficient = 0; // revolutions per second -> power
 		static final int dashboard = 3;
 	}
@@ -94,8 +93,8 @@ public abstract class Constants {
 	}
 
 	static abstract class vision {
-		static final int distanceDashboard = 6;
-		static final int angleDashboard = 7;
+		static final int distanceDashboard = 5;
+		static final int angleDashboard = 6;
 	}
 
 	// Settings related to the Assist (alignment) system
@@ -115,15 +114,26 @@ public abstract class Constants {
 	}
 
 	static abstract class autonomous {
-		static final int polarity = 1;
-		static final double forwardTime = 0;
-		static final double forwardSpeed = 0;
+		static final double time = 6;
+		static final double speed = 0.25;
+		// Constants for unfinished autonomous mode
+		static final double readyTime = 0;
+		static final double readySpeed = 0;
 		static final double rotationTime = 0;
 		static final double rotationSpeed = 0;
 		static final double lateralTime = 0;
 		static final double lateralSpeed = 0;
 		static final double alignTime = 0;
 		static final double alignSpeed = 0;
+		static final double forwardTime = 0;
+		static final double forwardSpeed = 0;
+		static final double shootTime = 0;
+		static final double shootPower = 0;
+		static final double reverseTime = 0;
+		static final double reverseSpeed = 0;
+		static final double finishTime = 0;
+		static final double finishSpeed = 0;
 		static final double shooterSpeed = 0;
+		static final int polarity = 1;
 	}
 }

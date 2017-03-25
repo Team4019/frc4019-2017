@@ -14,12 +14,13 @@ public abstract class Range {
         return clamp(value, 0, 1);
     }
 
-    public static double spread(double value, double min, double max) {
+    public static double squeeze(double value, double min, double max) {
     	// Return a number between 0 and 1 indicating a number's position between two endpoints
         return (clamp(value, min, max) - min) / (max - min);
     }
 
-    /*public static double unspread(double value, double min, double max) {
-
-    }*/
+    public static double spread(double value, double min, double max) {
+    	// Return the position of a number from 0 to 1 relative to two endpoints (inverse of squeeze)
+        return clamp(value) * (max - min) + min;
+    }
 }

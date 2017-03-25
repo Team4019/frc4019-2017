@@ -15,6 +15,7 @@ public abstract class Teleoperated {
 
 	public static int periodic() {
 		// Drive and align
+		double driveThrottle = Robot.rightStick.throttle();
 		if (Robot.rightStick.button(Constants.drive.arcadeButton)) {
 			Robot.drive.mode = Drive.DriveMode.ARCADE;
 		} else if (Robot.rightStick.button(Constants.drive.hybridButton)) {
@@ -25,8 +26,9 @@ public abstract class Teleoperated {
 			Robot.drive.mode = Drive.DriveMode.TRIPLE;
 		}
 		if (!Assist.assist(Robot.rightStick.button(Constants.assist.distanceButton), Robot.rightStick.button(Constants.assist.angleButton))) {
-			Robot.drive.drive();
+			Robot.drive.drive(driveThrottle);
 		}
+		Dashboard.write(Constants.drive.dashboard, "Drive: " + Robot.drive.mode + " " + Math.round(driveThrottle * 100) + "%");
 
 		// Ball intake
 		if (Robot.leftStick.button(Constants.intake.forwardButton)) {
@@ -36,8 +38,10 @@ public abstract class Teleoperated {
 		} else {
 			Robot.intake.stop();
 		}
+		Dashboard.write(Constants.intake.dashboard, "Intake: " + Robot.intake.mode);
 
 		// Shooting mechanism
+		double shooterThrottle = Range.spread(Robot.leftStick.throttle(), Dashboard.getSlider(0) / 100, Dashboard.getSlider(1) / 100);
 		if (Robot.leftStick.button(Constants.shooter.constantButton)) {
 			if (shooterStart == null) shooterStart = now();
 			Robot.shooter.constant();
@@ -46,33 +50,31 @@ public abstract class Teleoperated {
 			Robot.shooter.dynamic();
 		} else if (Robot.leftStick.button(Constants.shooter.manualButton)) {
 			if (shooterStart == null) shooterStart = now();
-			Robot.shooter.set(Range.spread(Robot.leftStick.throttle(), Constants.shooter.throttleFloor, Constants.shooter.throttleCeiling));
+			Robot.shooter.set(shooterThrottle);
 		} else {
 			shooterStart = null;
 			Robot.shooter.stop();
 		}
-		Dashboard.write(Constants.shooter.dashboard, "Shooter: " + Robot.shooter.mode + " " + Robot.leftStick.throttle());
+		Dashboard.write(Constants.shooter.dashboard, "Shooter: " + Robot.shooter.mode + " " + Math.round(shooterThrottle * 100) + "%");
 
 		// Shooting mechanism conveyor
-		double temp = now();
-		if ((shooterStart != null && temp > shooterStart + Constants.conveyor.startupTime) || Robot.leftStick.button(Constants.conveyor.forwardButton)) {
+		if ((shooterStart != null && now() > shooterStart + Constants.conveyor.startupTime) || Robot.leftStick.button(Constants.conveyor.forwardButton)) {
 			Robot.conveyor.forward();
 		} else if (Robot.leftStick.button(Constants.conveyor.reverseButton)) {
 			Robot.conveyor.reverse();
 		} else {
 			Robot.conveyor.stop();
 		}
-
-		//System.out.println(shooterStart == null ? null : temp - shooterStart);
+		Dashboard.write(Constants.conveyor.dashboard, "Conveyor: " + Robot.conveyor.mode);
 
 		// Climbing mechanism
+		double climberThrottle = Robot.leftStick.vertical();
 		if (Robot.leftStick.button(Constants.climber.safetyButton)) {
-			Robot.climber.set(Robot.leftStick.vertical());
+			Robot.climber.set(climberThrottle);
 		} else {
 			Robot.climber.stop();
 		}
-
-		Dashboard.write(Constants.sticks.leftThrottleDashboard, "Left throttle: " + Math.round(Range.spread(Robot.leftStick.throttle(), Constants.shooter.throttleFloor, Constants.shooter.throttleCeiling) * 100) + "%");
+		Dashboard.write(Constants.climber.dashboard, "Climber: " + Robot.climber.mode + " " + Math.round(climberThrottle * 100) + "%");
 
 		// LED lights
 		Robot.lights.set(Dashboard.getButton(0) ? Relay.Value.kOn : Relay.Value.kOff);

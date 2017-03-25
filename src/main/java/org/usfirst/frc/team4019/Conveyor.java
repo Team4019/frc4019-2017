@@ -35,6 +35,6 @@ public class Conveyor {
 	}
 
 	public void setDashboard() {
-		Dashboard.write(Constants.conveyor.dashboard, "Conveyor: " + this.mode);
+		//Dashboard.write(Constants.conveyor.dashboard, "Conveyor: " + this.mode);
 	}
 }

@@ -32,6 +32,6 @@ public class Climber {
 	}
 
 	public void setDashboard(double value) {
-		Dashboard.write(Constants.climber.dashboard, "Climber: " + this.mode + " " + Math.round(value * 100) + "%");
+		//Dashboard.write(Constants.climber.dashboard, "Climber: " + this.mode + " " + Math.round(value * 100) + "%");
 	}
 }

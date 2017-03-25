@@ -44,16 +44,16 @@ public class Drive {
 		this.mode = Constants.drive.defaultMode;
 	}
 
-	public void drive() {
+	public void drive(double throttle) {
 		switch (this.mode) {
 			case ARCADE:
-				this.set(Robot.rightStick.vertical(), Robot.rightStick.horizontal(), Robot.rightStick.throttle());
+				this.set(Robot.rightStick.vertical(), Robot.rightStick.horizontal(), throttle);
 				break;
 			case HYBRID:
-				this.set(Robot.rightStick.vertical(), Robot.rightStick.trigger() ? Robot.rightStick.rotation() : Robot.rightStick.horizontal(), Robot.rightStick.throttle());
+				this.set(Robot.rightStick.vertical(), Robot.rightStick.trigger() ? Robot.rightStick.rotation() : Robot.rightStick.horizontal(), throttle);
 				break;
 			case TWIST:
-				this.set(Robot.rightStick.vertical(), Robot.rightStick.rotation(), Robot.rightStick.throttle());
+				this.set(Robot.rightStick.vertical(), Robot.rightStick.rotation(), throttle);
 				break;
 			case TRIPLE:
 				this.set(0, 0, 0);
@@ -61,13 +61,21 @@ public class Drive {
 		}
 	}
 
+	public void drive() {
+		drive(1);
+	}
+
 	public void set(double forward, double rotation, double throttle) {
 		this.leftDrive.set((forward + rotation) * throttle);
 		this.rightDrive.set((forward - rotation) * throttle);
-		Dashboard.write(Constants.drive.dashboard, "Drive: " + this.mode + " " + Math.round(throttle * 100) + "%");
+		//Dashboard.write(Constants.drive.dashboard, "Drive: " + this.mode + " " + Math.round(throttle * 100) + "%");
 	}
 
 	public void set(double forward, double rotation) {
 		this.set(forward, rotation, 1);
+	}
+
+	public void stop() {
+		this.set(0, 0);
 	}
 }

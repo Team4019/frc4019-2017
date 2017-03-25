@@ -19,7 +19,7 @@ public class Stick extends Joystick {
 		double center = -0.16;
 		double deadzone = 0.2;
 		double twist = this.getTwist();
-		return twist >= center ? Range.spread(twist, center + deadzone, 1) : Range.spread(twist, -1, center - deadzone) - 1;
+		return twist >= center ? Range.squeeze(twist, center + deadzone, 1) : Range.squeeze(twist, -1, center - deadzone) - 1;
 	}
 	public double throttle() {
 		return this.getThrottle() / -2 + 0.5;

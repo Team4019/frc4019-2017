@@ -33,6 +33,6 @@ public class Intake {
     }
 
     public void setDashboard() {
-	    Dashboard.write(Constants.intake.dashboard, "Intake: " + this.mode);
+	    //Dashboard.write(Constants.intake.dashboard, "Intake: " + this.mode);
     }
 }
